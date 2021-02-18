@@ -1,8 +1,5 @@
-name: CI
-on:
-  pull_request:
-    branches:
-      - master
+name: Test and build Mobile Apps
+on: push
 
 jobs:
   flutter_test:
