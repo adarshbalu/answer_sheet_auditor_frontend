@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.answer_sheet_auditor">
    <application
-        android:label="answer_sheet_auditor"
+        android:label="Answer sheet auditor"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
