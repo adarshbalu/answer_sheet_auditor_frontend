@@ -1,5 +1,8 @@
 name: Test and build Mobile Apps
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   flutter_test:

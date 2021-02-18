@@ -1,0 +1,14 @@
+include: package:lint/analysis_options_package.yaml
+
+#analyzer:
+#  exclude:
+
+linter:
+  rules:
+    #Disabled use key in widget constructors
+    use_key_in_widget_constructors: false
+    sort_constructors_first: true
+    prefer_double_quotes: false
+    public_member_api_docs: false
+    prefer_single_quotes: true
+    always_specify_types: true
