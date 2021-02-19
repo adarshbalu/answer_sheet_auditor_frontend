@@ -2,7 +2,7 @@ name: Test and build Mobile Apps
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   flutter_test:
