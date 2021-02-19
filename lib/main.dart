@@ -9,14 +9,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Answer sheet Auditor',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Answer Sheet Auditor'),
+          title: const SelectableText('Answer Sheet Auditor'),
         ),
-        body: const Text('Welcome'),
+        body: const Center(child: SelectableText('Welcome')),
       ),
     );
   }
