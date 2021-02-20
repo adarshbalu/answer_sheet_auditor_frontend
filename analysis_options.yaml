@@ -11,5 +11,10 @@ linter:
     prefer_double_quotes: false
     public_member_api_docs: false
     prefer_single_quotes: true
-    always_specify_types: true
+    always_specify_types: false
     sort_pub_dependencies: false
+    constant_identifier_names: false
+    overridden_fields: false
+    annotate_overrides : false
+
+
