@@ -1,5 +1,7 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
+import 'package:answer_sheet_auditor/core/utils/routes.dart';
 import 'package:answer_sheet_auditor/di/injection_container.dart' as di;
+import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -29,6 +31,11 @@ class MyApp extends StatelessWidget {
         ),
         body: const Center(child: SelectableText('Welcome')),
       ),
+      routes: {
+        // Routes.LOGIN_SCREEN: (_) => LoginScreen(),
+        Routes.SIGNUP_SCREEN: (_) => SignupScreen(),
+        //  Routes.HOME_SCREEN: (_) => HomeScreen(),
+      },
     );
   }
 }
