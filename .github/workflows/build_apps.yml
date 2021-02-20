@@ -7,7 +7,6 @@ on:
 jobs:
   build_ios:
     name: Build Flutter (iOS)
-    needs: [flutter_test]
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,8 +22,7 @@ jobs:
       - run: flutter build ios --release --no-codesign
 
   build_appbundle:
-    name: Build Flutter (Android)
-    needs: [flutter_test]
+    name: Build AppBundle (Android)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -41,6 +39,7 @@ jobs:
       - run: flutter build appbundle
 
   build_and_upload_apk:
+    name: Build Apk (Android)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
