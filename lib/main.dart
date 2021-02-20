@@ -3,6 +3,7 @@ import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/utils/routes.dart';
 import 'package:answer_sheet_auditor/di/injection_container.dart' as di;
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
+import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:answer_sheet_auditor/presentation/screens/auth/login_screen.dart';
 import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
 import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => di.locator<AuthProvider>()),
+        ChangeNotifierProvider(create: (_) => di.locator<StorageProvider>()),
       ],
       child: MateApp(),
     );

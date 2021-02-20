@@ -54,10 +54,4 @@ class UserAuthRepositoryImpl implements UserAuthRepository {
       return Left(AuthFailure());
     }
   }
-
-  @override
-  Future<Either<Failure, User>> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
-    throw UnimplementedError();
-  }
 }

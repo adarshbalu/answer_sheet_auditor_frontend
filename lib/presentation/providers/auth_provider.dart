@@ -8,8 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-enum AuthStatus { UNAUTHENTICATED, AUTHENTICATED, LOADING }
-enum UserStatus { AVAILABLE, ERROR, LOADING }
+enum AuthStatus { UNAUTHENTICATED, AUTHENTICATED, LOADING, ERROR }
 
 class AuthProvider extends ChangeNotifier with EquatableMixin {
   AuthProvider(
@@ -25,7 +24,6 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
         assert(inputConverter != null);
   final LoginUser loginUser;
   final SignupUser signupUser;
-
   final SignoutUser signoutUser;
   final InputConverter inputConverter;
   final FirebaseAuth firebaseAuth;
@@ -33,10 +31,10 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
   @override
   List<Object> get props => [];
 
-  AuthStatus _status;
-  User _firebaseUser;
+  AuthStatus _status = AuthStatus.UNAUTHENTICATED;
+
   String _errorMessage;
-  UserStatus _userStatus;
+
   User userModel;
   User _user;
   User get user => _user;
@@ -47,8 +45,6 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
   /// AUTHENTICATING - authentication is in progress
   /// AUTHENTICATED - user is authenticated
   AuthStatus get status => _status;
-  UserStatus get userStatus => _userStatus;
-  User get firebaseUser => _firebaseUser;
 
   String get error => _errorMessage;
 
@@ -63,8 +59,8 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
     final failureOrEmail = inputConverter.stringToEmail(email);
     failureOrEmail.fold(
       (inputFailure) {
-        _firebaseUser = null;
-        _status = AuthStatus.UNAUTHENTICATED;
+        _user = null;
+        _status = AuthStatus.ERROR;
         _errorMessage = _mapFailureToMessage(inputFailure);
         notifyListeners();
       },
@@ -73,14 +69,17 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
             await signupUser(Params(email: validEmail, password: password));
         failureOrUser.fold(
           (failure) {
-            _firebaseUser = null;
-            _status = AuthStatus.UNAUTHENTICATED;
+            _user = null;
+            _status = AuthStatus.ERROR;
             _errorMessage = _mapFailureToMessage(failure);
             notifyListeners();
+            Future.delayed(const Duration(seconds: 2), () {
+              _status = AuthStatus.UNAUTHENTICATED;
+              notifyListeners();
+            });
           },
           (user) async {
             _status = AuthStatus.AUTHENTICATED;
-            _firebaseUser = user;
             _user = user;
             notifyListeners();
           },
@@ -97,13 +96,17 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
         await loginUser(Params(email: email, password: password));
     failureOrUser.fold(
       (failure) {
-        _firebaseUser = null;
-        _status = AuthStatus.UNAUTHENTICATED;
+        _user = null;
+        _status = AuthStatus.ERROR;
         _errorMessage = _mapFailureToMessage(failure);
         notifyListeners();
+        Future.delayed(const Duration(seconds: 2), () {
+          _status = AuthStatus.UNAUTHENTICATED;
+          notifyListeners();
+        });
       },
       (user) async {
-        _firebaseUser = user;
+        _user = user;
         _status = AuthStatus.AUTHENTICATED;
         notifyListeners();
       },
@@ -117,13 +120,17 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
     final failureOrSuccess = await signoutUser(NoParams());
     failureOrSuccess.fold(
       (failure) {
-        _firebaseUser = null;
-        _status = AuthStatus.UNAUTHENTICATED;
+        _user = null;
+        _status = AuthStatus.ERROR;
         _errorMessage = _mapFailureToMessage(failure);
         notifyListeners();
+        Future.delayed(const Duration(seconds: 2), () {
+          _status = AuthStatus.UNAUTHENTICATED;
+          notifyListeners();
+        });
       },
       (_) {
-        _firebaseUser = null;
+        _user = null;
         _status = AuthStatus.UNAUTHENTICATED;
         notifyListeners();
       },

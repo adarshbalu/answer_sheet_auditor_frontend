@@ -12,12 +12,19 @@ class AuthWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (userSnapshot.connectionState == ConnectionState.active) {
       if (userSnapshot.hasData) {
-        return HomeScreen();
+        return LoggedUserBuilder();
       } else {
         return LoginScreen();
       }
     } else {
       return const SplashScreen();
     }
+  }
+}
+
+class LoggedUserBuilder extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return HomeScreen();
   }
 }
