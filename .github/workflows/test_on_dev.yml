@@ -16,6 +16,11 @@ jobs:
         with:
           channel: "beta"
       - run: flutter pub get
+      # Step 2: Decode Google services configuration file
+      - name: Decode google-services.json
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: echo $FIREBASE_CONFIG > app/google-services.json
       - run: flutter format --set-exit-if-changed
       - run: flutter analyze
       - run: flutter test
