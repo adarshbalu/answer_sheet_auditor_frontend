@@ -18,9 +18,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeyStepTwo = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeyStepThree = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKeyStepFour = GlobalKey<FormState>();
-
-  TextEditingController carController;
 
   static const Duration _pageTransitionDuration = Duration(milliseconds: 300);
   static const Curve _pageAnimationCurve = Cubic(0.1, 0.2, 0.7, 1.0);
@@ -39,7 +36,6 @@ class _SignupScreenState extends State<SignupScreen> {
     super.initState();
 
     _pageController = PageController();
-    carController = TextEditingController();
   }
 
   @override
@@ -471,86 +467,81 @@ Password and confirm password didn't match !''';
         padding: const EdgeInsets.all(22.0),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: _formKeyStepFour,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                //back icon
-                InkWell(
-                  onTap: () => _pageController.animateToPage(
-                    3,
-                    duration: _pageTransitionDuration,
-                    curve: _pageAnimationCurve,
-                  ),
-                  child: SvgPicture.asset(
-                    Assets.BACK,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              //back icon
+              InkWell(
+                onTap: () => _pageController.animateToPage(
+                  3,
+                  duration: _pageTransitionDuration,
+                  curve: _pageAnimationCurve,
                 ),
-                //header space
-                SizedBox(height: screenSize.height * 0.1),
-                //heading text
-                SizedBox(
-                  width: screenSize.width * 0.4,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '''
+                child: SvgPicture.asset(
+                  Assets.BACK,
+                ),
+              ),
+              //header space
+              SizedBox(height: screenSize.height * 0.1),
+              //heading text
+              SizedBox(
+                width: screenSize.width * 0.4,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    '''
 Let's Finish''',
-                      style: textTheme.headline1,
-                    ),
+                    style: textTheme.headline1,
                   ),
                 ),
-                //subtitle text
-                // SizedBox(
-                //   width: screenSize.width * 0.6,
-                //   child: FittedBox(
-                //     fit: BoxFit.scaleDown,
-                //     alignment: Alignment.topLeft,
-                //     child: Text(
-                //       'Please enter your car.',
-                //       style: textTheme.subtitle1,
-                //     ),
-                //   ),
-                // ),
-                //spacing
-                SizedBox(
-                  height: screenSize.height * 0.08,
-                ),
-
-                //spacing
-                SizedBox(height: screenSize.height * 0.06),
-
-                //login button
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: SizedBox(
-                    width: screenSize.width * 0.3,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        //unfocusing
-                        FocusScope.of(context).unfocus();
-
-                        //verification step 5
-                        final form = _formKeyStepFour.currentState;
-
-                        if (form.validate()) {
-                          form.save();
-
-                          if (authProvider.firebaseUser != null) {
-                            authProvider.signupUserWithEmail(_email, _password);
-                          } else {
-                            //Phone verification is unsuccessful.
-                          }
-                        }
-                      },
-                      child: const FittedBox(child: Text('Register')),
-                    ),
+              ),
+              //subtitle text
+              SizedBox(
+                width: screenSize.width * 0.6,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Click on register',
+                    style: textTheme.subtitle1,
                   ),
                 ),
-              ],
-            ),
+              ),
+              //spacing
+              SizedBox(
+                height: screenSize.height * 0.08,
+              ),
+
+              //spacing
+              SizedBox(height: screenSize.height * 0.06),
+
+              //login button
+              Align(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  width: screenSize.width * 0.3,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      //unfocusing
+                      FocusScope.of(context).unfocus();
+
+                      //verification step 5
+                      //   final form = _formKeyStepFour.currentState;
+
+                      // if (form.validate()) {
+                      //   form.save();
+
+                      authProvider.signupUserWithEmail(_email, _password);
+                      // } else {
+                      //   //Phone verification is unsuccessful.
+                      // }
+                    },
+                    child: const FittedBox(child: Text('Register')),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

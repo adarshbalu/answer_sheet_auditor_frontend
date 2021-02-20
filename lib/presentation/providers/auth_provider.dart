@@ -80,6 +80,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
           },
           (user) async {
             _status = AuthStatus.AUTHENTICATED;
+            _firebaseUser = user;
             _user = user;
             notifyListeners();
           },
