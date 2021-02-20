@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:answer_sheet_auditor/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -20,7 +22,7 @@ class Params extends Equatable {
     this.email,
     this.password,
     this.keyword,
-    this.phone,
+    this.file,
     this.sms,
     this.verificationID,
     this.onPhoneVerified,
@@ -28,11 +30,11 @@ class Params extends Equatable {
   final String keyword;
   final String email;
   final String password;
-  final String phone;
+  final File file;
   final String sms;
   final String verificationID;
   final Function(String, bool) onPhoneVerified;
 
   @override
-  List<Object> get props => <Object>[keyword, email, password, phone];
+  List<Object> get props => <Object>[keyword, email, password, file];
 }

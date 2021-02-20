@@ -11,6 +11,7 @@ import 'package:answer_sheet_auditor/domain/repositories/user_auth_repository.da
 import 'package:answer_sheet_auditor/domain/usecases/auth/login_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/upload_file.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:connectivity/connectivity.dart';
@@ -36,12 +37,13 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => StorageProvider(),
+    () => StorageProvider(locator()),
   );
 
   //usecases
 
   _initAuthUsecases();
+  _initStorageUseCases();
 
   //repository
 
@@ -74,4 +76,8 @@ void _initAuthUsecases() {
   locator.registerLazySingleton(() => LoginUser(locator()));
   locator.registerLazySingleton(() => SignupUser(locator()));
   locator.registerLazySingleton(() => SignoutUser(locator()));
+}
+
+void _initStorageUseCases() {
+  locator.registerLazySingleton(() => UploadFileToStorage(locator()));
 }
