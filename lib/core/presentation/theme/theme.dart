@@ -11,7 +11,7 @@ class AppTheme {
   static const Color FONT_LIGHT_COLOR = Color(0xFF97A4AE);
   static const Color BORDER_COLOR = Color(0xFFD3DCE6);
 
-  static const TextTheme FIXX_TEXT_THEME = TextTheme(
+  static const TextTheme TEXT_THEME = TextTheme(
     headline1: TextStyle(
       fontFamily: 'GoogleSans',
       fontSize: 26,

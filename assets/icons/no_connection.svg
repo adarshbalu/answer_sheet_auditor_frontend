@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150px" height="174px" viewBox="0 0 150 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>E54C0F9F-3DBB-454C-96AC-7FAC6B61FEE8@0.5x</title>
+    <defs>
+        <linearGradient x1="50%" y1="255.331964%" x2="50%" y2="65.5633577%" id="linearGradient-1">
+            <stop stop-color="#39B0B0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="20.4264091%" y1="63.5884016%" x2="52.0662702%" y2="44.955125%" id="linearGradient-2">
+            <stop stop-color="#39B0B0" offset="0.0686325393%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-3" points="2.22906696e-13 -2.08470744e-14 51.4685859 -2.08470744e-14 40.1085498 22.5172248 51.7791511 45.0344495 46.5134 67.5516743 51.9587629 90.068899 2.22906696e-13 90.068899"></polygon>
+        <polygon id="path-5" points="63.7739664 0 11.749469 0 0.403704308 22.5433367 12.0596441 45.0866734 6.80050821 67.6300102 12.2390302 90.1733469 63.7739664 90.1733469"></polygon>
+        <linearGradient x1="93.0547378%" y1="87.0879522%" x2="38.742322%" y2="40.3216633%" id="linearGradient-7">
+            <stop stop-color="#39B0B0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="No-INternet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="No-Internet" transform="translate(-105.000000, -433.000000)">
+            <g id="Group-3" transform="translate(105.000000, 433.000000)">
+                <circle id="Oval" fill="#D8D8D8" opacity="0" cx="74.6907216" cy="74.6907216" r="74.6907216"></circle>
+                <circle id="Oval-Copy" fill="url(#linearGradient-1)" opacity="0.590742565" transform="translate(95.103093, 38.041237) scale(1, -1) translate(-95.103093, -38.041237) " cx="95.1030928" cy="38.0412371" r="19.0206186"></circle>
+                <circle id="Oval-Copy-4" fill="url(#linearGradient-1)" opacity="0.255741664" transform="translate(115.979381, 49.175258) scale(1, -1) translate(-115.979381, -49.175258) " cx="115.979381" cy="49.1752577" r="19.0206186"></circle>
+                <g id="Group-2" transform="translate(102.061856, 64.948454)" fill="url(#linearGradient-1)" opacity="0.415560768">
+                    <circle id="Oval-Copy-6" transform="translate(13.917526, 13.917526) scale(1, -1) translate(-13.917526, -13.917526) " cx="13.9175258" cy="13.9175258" r="13.9175258"></circle>
+                    <circle id="Oval-Copy-5" transform="translate(29.226804, 22.268041) scale(1, -1) translate(-29.226804, -22.268041) " cx="29.2268041" cy="22.2680412" r="13.9175258"></circle>
+                </g>
+                <circle id="Oval-Copy-3" fill="url(#linearGradient-1)" opacity="0.590742565" transform="translate(19.020619, 68.195876) scale(1, -1) translate(-19.020619, -68.195876) " cx="19.0206186" cy="68.1958763" r="19.0206186"></circle>
+                <path d="M66.7298744,125.833477 C68.8823906,147.557482 72.589824,167.153771 77.8521745,184.622344 C91.9799823,171.033208 100.771283,151.935959 100.771283,130.785392 C100.771283,95.2866712 76.0064992,65.5720752 42.8109961,57.9756698 C45.7902802,78.3639382 53.7632396,100.983207 66.7298744,125.833477 Z" id="Oval-Copy-7" fill="url(#linearGradient-2)" opacity="0.652074178" transform="translate(71.791140, 121.299007) rotate(-255.000000) translate(-71.791140, -121.299007) "></path>
+                <g id="Group" transform="translate(77.987670, 92.761261) rotate(8.000000) translate(-77.987670, -92.761261) translate(21.487670, 43.761261)">
+                    <g id="Combined-Shape-Copy-2" transform="translate(0.086490, 0.910459)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <path d="M37.6576647,69.9617371 C45.4479318,62.158197 58.1103704,62.158197 65.9008581,69.9617371 L65.9008581,69.9617371 L51.7792614,84.1069936 Z M18.828722,51.1014688 C37.0221929,32.8775161 66.53633,32.8775161 84.7295802,51.1014688 L84.7295802,51.1014688 L75.3151088,60.5314925 C62.3232399,47.5178565 41.2350624,47.5178565 28.2431934,60.5314925 L28.2431934,60.5314925 Z M8.45545856e-13,32.2409795 C28.5962333,3.59683519 74.9620689,3.59683519 103.558523,32.2409795 L103.558523,32.2409795 L94.1440515,41.6712242 C70.7491995,18.2371756 32.8093234,18.2371756 9.41447135,41.6712242 L9.41447135,41.6712242 Z" fill="#93C2C2" mask="url(#mask-4)"></path>
+                    </g>
+                    <g id="Combined-Shape-Copy" transform="translate(75.565003, 48.780979) rotate(6.000000) translate(-75.565003, -48.780979) translate(43.565003, 3.280979)">
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <path d="M-2.04410173,70.0428679 C5.73637858,62.2302784 18.3829096,62.2302784 26.1636103,70.0428679 L26.1636103,70.0428679 L12.0597543,84.2045278 Z M-20.84939,51.1607284 C-2.67877525,32.9156423 26.7982838,32.9156423 44.9686781,51.1607284 L44.9686781,51.1607284 L35.566034,60.6016875 C22.5904865,47.5729603 1.52880166,47.5729603 -11.4467459,60.6016875 L-11.4467459,60.6016875 Z M-39.6544579,32.2783676 C-11.0941495,3.60100624 35.2134376,3.60100624 63.7739664,32.2783676 L63.7739664,32.2783676 L54.3713223,41.719548 C31.0058607,18.2583243 -6.88635217,18.2583243 -30.2518137,41.719548 L-30.2518137,41.719548 Z" fill="#93C2C2" mask="url(#mask-6)"></path>
+                    </g>
+                </g>
+                <path d="M105.678347,71.1580198 C71.8169799,78.2563215 46.3890202,108.288194 46.3890202,144.259085 C46.3890202,155.972737 49.0854788,167.056597 53.8915379,176.923807 C78.66369,140.610197 98.8126706,94.6799012 105.678347,71.1580198 Z" id="Oval-Copy-2" fill="url(#linearGradient-7)" opacity="0.590742565" transform="translate(76.033683, 124.040914) rotate(-116.000000) translate(-76.033683, -124.040914) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

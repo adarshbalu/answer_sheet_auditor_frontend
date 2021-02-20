@@ -1,4 +1,5 @@
 import 'package:answer_sheet_auditor/core/utils/input_converter.dart';
+import 'package:answer_sheet_auditor/core/utils/network_status.dart';
 import 'package:answer_sheet_auditor/data/datasources/storage_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/user_auth_remote_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/storage_datasource_impl.dart';
@@ -12,6 +13,7 @@ import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -60,9 +62,11 @@ Future<void> init() async {
   //core
 
   locator.registerLazySingleton(() => InputConverter());
+  locator.registerLazySingleton(() => NetworkStatusService(locator()));
 
   //external
   locator.registerLazySingleton(() => FirebaseAuth.instance);
+  locator.registerLazySingleton(() => Connectivity());
   locator.registerLazySingleton(() => FirebaseStorage.instance);
 }
 
