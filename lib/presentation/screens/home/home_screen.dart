@@ -1,6 +1,7 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
+import 'package:answer_sheet_auditor/presentation/screens/upload/add_new_upload.dart';
 import 'package:answer_sheet_auditor/presentation/widgets/upload_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +45,8 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.PRIMARY_COLOR,
         onPressed: () {
-          context.read<StorageProvider>().addNewSheet();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => AddNewUpload()));
         },
         child: const Icon(
           Icons.add,
