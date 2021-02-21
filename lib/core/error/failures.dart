@@ -20,6 +20,11 @@ class UploadFailure extends Failure {
   List<Object> get props => <Object>[];
 }
 
+class FilePickerFailure extends Failure {
+  @override
+  List<Object> get props => <Object>[];
+}
+
 class AuthFailure extends Failure {
   AuthFailure({this.message = 'Something went wrong'});
   final String message;

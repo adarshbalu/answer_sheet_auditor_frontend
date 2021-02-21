@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:answer_sheet_auditor/core/error/failures.dart';
+import 'package:answer_sheet_auditor/data/datasources/file_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/storage_datasource.dart';
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
 import 'package:answer_sheet_auditor/domain/repositories/storage_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class StorageRepositoryImpl extends StorageRepository {
-  StorageRepositoryImpl(this.storageRemoteDataSource);
+  StorageRepositoryImpl(this.storageRemoteDataSource, this.fileDataSource);
   final StorageRemoteDataSource storageRemoteDataSource;
+  final FileDataSource fileDataSource;
 
   @override
   Future<Either<Failure, AnswerSheet>> uploadAnswerSheetToStorage(
@@ -21,5 +23,11 @@ class StorageRepositoryImpl extends StorageRepository {
     } catch (e) {
       return Left(UploadFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, File>> getFile() {
+    // TODO: implement getFile
+    throw UnimplementedError();
   }
 }

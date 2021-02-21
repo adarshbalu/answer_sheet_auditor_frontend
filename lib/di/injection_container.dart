@@ -1,7 +1,9 @@
 import 'package:answer_sheet_auditor/core/utils/input_converter.dart';
 import 'package:answer_sheet_auditor/core/utils/network_status.dart';
+import 'package:answer_sheet_auditor/data/datasources/file_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/storage_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/user_auth_remote_datasource.dart';
+import 'package:answer_sheet_auditor/data/datasources_impl/file_datasouce_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/storage_datasource_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/user_auth_remote_datasource_impl.dart';
 import 'package:answer_sheet_auditor/data/repositories_impl/storage_repository_impl.dart';
@@ -51,12 +53,14 @@ Future<void> init() async {
       () => UserAuthRepositoryImpl(locator()));
 
   locator.registerLazySingleton<StorageRepository>(
-      () => StorageRepositoryImpl(locator()));
+      () => StorageRepositoryImpl(locator(), locator()));
 
   //data sources
 
   locator.registerLazySingleton<UserAuthRemoteDataSource>(
       () => UserAuthRemoteDataSourceImpl(locator()));
+
+  locator.registerLazySingleton<FileDataSource>(() => FileDataSouceImpl());
 
   locator.registerLazySingleton<StorageRemoteDataSource>(
       () => StorageRemoteDataSourceImpl(locator()));
