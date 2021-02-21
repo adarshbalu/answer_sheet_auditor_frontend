@@ -13,6 +13,8 @@ import 'package:answer_sheet_auditor/domain/repositories/user_auth_repository.da
 import 'package:answer_sheet_auditor/domain/usecases/auth/login_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_file.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
@@ -84,4 +86,6 @@ void _initAuthUsecases() {
 
 void _initStorageUseCases() {
   locator.registerLazySingleton(() => UploadFileToStorage(locator()));
+  locator.registerLazySingleton(() => PickImageFile(locator()));
+  locator.registerLazySingleton(() => PickTextFile(locator()));
 }

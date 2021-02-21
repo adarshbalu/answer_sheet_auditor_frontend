@@ -7,5 +7,6 @@ import 'package:dartz/dartz.dart';
 abstract class StorageRepository {
   Future<Either<Failure, AnswerSheet>> uploadAnswerSheetToStorage(
       File file, String name);
-  Future<Either<Failure, File>> getFile();
+  Future<Either<Failure, File>> pickImageFile();
+  Future<Either<Failure, File>> pickTextFile();
 }

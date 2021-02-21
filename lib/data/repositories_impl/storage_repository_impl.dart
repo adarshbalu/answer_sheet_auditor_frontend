@@ -26,8 +26,20 @@ class StorageRepositoryImpl extends StorageRepository {
   }
 
   @override
-  Future<Either<Failure, File>> getFile() {
-    // TODO: implement getFile
-    throw UnimplementedError();
+  Future<Either<Failure, File>> pickImageFile() async {
+    try {
+      return Right(await fileDataSource.getImageFromStorage());
+    } catch (e) {
+      return Left(FilePickerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, File>> pickTextFile() async {
+    try {
+      return Right(await fileDataSource.getTextFromStorage());
+    } catch (e) {
+      return Left(FilePickerFailure());
+    }
   }
 }
