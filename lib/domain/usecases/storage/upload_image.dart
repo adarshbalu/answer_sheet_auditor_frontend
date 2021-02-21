@@ -4,8 +4,8 @@ import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
 import 'package:answer_sheet_auditor/domain/repositories/storage_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class UploadFileToStorage implements UseCase<AnswerSheet, Params> {
-  UploadFileToStorage(this.repository);
+class UploadImageToStorage implements UseCase<AnswerSheet, Params> {
+  UploadImageToStorage(this.repository);
   final StorageRepository repository;
 
   @override

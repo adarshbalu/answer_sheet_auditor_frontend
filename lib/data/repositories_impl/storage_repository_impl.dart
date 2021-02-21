@@ -42,4 +42,16 @@ class StorageRepositoryImpl extends StorageRepository {
       return Left(FilePickerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, AnswerSheet>> uploadAnswerKeyToStorage(
+      File file, String name) async {
+    try {
+      final result = await storageRemoteDataSource.uploadAnswerkey(file, name);
+
+      return Right(result);
+    } catch (e) {
+      return Left(UploadFailure());
+    }
+  }
 }

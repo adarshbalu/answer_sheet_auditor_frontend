@@ -15,7 +15,8 @@ import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
-import 'package:answer_sheet_auditor/domain/usecases/storage/upload_file.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/upload_image.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/upload_text.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:connectivity/connectivity.dart';
@@ -41,7 +42,7 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => StorageProvider(locator()),
+    () => StorageProvider(locator(), locator(), locator(), locator()),
   );
 
   //usecases
@@ -85,7 +86,8 @@ void _initAuthUsecases() {
 }
 
 void _initStorageUseCases() {
-  locator.registerLazySingleton(() => UploadFileToStorage(locator()));
+  locator.registerLazySingleton(() => UploadImageToStorage(locator()));
   locator.registerLazySingleton(() => PickImageFile(locator()));
   locator.registerLazySingleton(() => PickTextFile(locator()));
+  locator.registerLazySingleton(() => UploadTextToStorage(locator()));
 }

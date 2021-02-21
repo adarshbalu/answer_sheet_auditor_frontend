@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SvgPicture.asset(
-                Assets.UOLOAD_FILES,
+                Assets.UPLOAD_FILES,
                 height: 200,
               ),
               const SizedBox(
@@ -75,9 +75,9 @@ class HomeScreen extends StatelessWidget {
             child: ListView.builder(
               shrinkWrap: true,
               itemBuilder: (_, index) => UploadCard(
-                answerSheet: provider.urls[index],
+                answerSheet: provider.answerSheets[index],
               ),
-              itemCount: provider.urls.length,
+              itemCount: provider.answerSheets.length,
             ),
           ),
         ],
