@@ -1,6 +1,7 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
-import 'package:answer_sheet_auditor/core/utils/routes.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
+import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
+import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
 import 'package:answer_sheet_auditor/presentation/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -133,20 +134,19 @@ This field can't be empty!'''
                               if (form.validate()) {
                                 //saving the form
                                 form.save();
-                                authProvider.loginUserWithEmail(
+                                await authProvider.loginUserWithEmail(
                                   _email,
                                   _password,
                                 );
                                 if (authProvider.status ==
                                     AuthStatus.AUTHENTICATED) {
-                                  // await profile.getCurrentUserData(
-                                  //     authProvider.firebaseUser.uid);
-                                  // if (profile.status == prof.Status.DONE)
-                                  Navigator.of(context)
-                                      .pushReplacementNamed(Routes.HOME_SCREEN);
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (_) => HomeScreen()));
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: authProvider.error,
+                                      msg: authProvider.error ??
+                                          'Error Occurred',
                                       toastLength: Toast.LENGTH_LONG);
                                 }
                               }
@@ -175,7 +175,8 @@ I'm a new user, ''',
             //text part 2
             InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(Routes.SIGNUP_SCREEN);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => SignupScreen()));
               },
               child: Text(
                 'Sign Up',
@@ -189,34 +190,4 @@ I'm a new user, ''',
       ),
     );
   }
-/*
-  Future<void> _loginUser(
-      BuildContext context, String email, String password) async {
-    //unfocusing from all nodes
-    FocusScope.of(context).unfocus();
-
-    final form = _formKey.currentState;
-
-    //validating the form
-    if (form.validate()) {
-      //saving the form
-      form.save();
-
-      try {
-        await Auth.instance.signInWithEmail(email, password);
-      } catch (error) {
-        print(error);
-        // showDialog(
-        //   context: context,
-        //   builder: (context) {
-        //     return ErrorDialog(message: '$error');
-        //   },
-        // );
-        // return;
-      }
-
-      //navigating to next page
-      Navigator.of(context).pushReplacementNamed(Routes.HOME_SCREEN);
-    }
-  } */
 }

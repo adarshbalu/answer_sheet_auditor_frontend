@@ -14,7 +14,9 @@ class AuthWidgetBuilder extends StatelessWidget {
       builder: (context, snapshot) {
         final User user = snapshot.data;
         if (user != null) {
-          return Builder(builder: (context) => builder(context, snapshot));
+          return Provider<User>(
+              create: (context) => user,
+              child: Builder(builder: (context) => builder(context, snapshot)));
         }
         return builder(context, snapshot);
       },

@@ -1,7 +1,8 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
-import 'package:answer_sheet_auditor/core/utils/routes.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
+import 'package:answer_sheet_auditor/presentation/screens/auth/login_screen.dart';
+import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
 import 'package:answer_sheet_auditor/presentation/widgets/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' hide TextInput;
@@ -82,7 +83,8 @@ I'm already a member, ''',
             //text part 2
             InkWell(
               onTap: () {
-                Navigator.of(context).pushReplacementNamed(Routes.LOGIN_SCREEN);
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => LoginScreen()));
               },
               child: Text(
                 'Log In',
@@ -456,7 +458,8 @@ Password and confirm password didn't match !''';
           return child;
         } else if (provider.status == AuthStatus.AUTHENTICATED) {
           Future.delayed(Duration.zero, () {
-            Navigator.of(context).pushReplacementNamed(Routes.HOME_SCREEN);
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => HomeScreen()));
           });
           return const SizedBox.shrink();
         } else {

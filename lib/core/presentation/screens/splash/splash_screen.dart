@@ -8,15 +8,7 @@ class SplashScreen extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xffEEA080),
-            Color(0xffF7A7C8),
-          ],
-        )),
+        decoration: const BoxDecoration(),
         child: const Center(
           child: Text('Loading'),
         ),

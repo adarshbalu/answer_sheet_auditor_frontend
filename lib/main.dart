@@ -2,20 +2,16 @@ import 'package:answer_sheet_auditor/core/presentation/screens/auth/auth_widget_
 import 'package:answer_sheet_auditor/core/presentation/screens/splash/no_connection.dart';
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/network_aware_widget.dart';
-import 'package:answer_sheet_auditor/core/utils/network_status.dart';
-import 'package:answer_sheet_auditor/core/utils/routes.dart';
 import 'package:answer_sheet_auditor/di/injection_container.dart' as di;
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
-import 'package:answer_sheet_auditor/presentation/screens/auth/login_screen.dart';
-import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
-import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 import 'core/presentation/screens/auth/auth_widget.dart';
+import 'core/utils/network_status.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,21 +59,16 @@ class MateApp extends StatelessWidget {
             iconTheme: AppTheme.ICON_THEME_DATA,
           ),
           title: 'Answer sheet Auditor',
-          home: Overlay(
-            initialEntries: [
-              OverlayEntry(
-                builder: (_) => NetworkAwareWidget(
-                  onlineChild: AuthWidget(userSnapshot: userSnapshot),
-                  offlineChild: const NoConnectionScreen(),
-                ),
-              ),
-            ],
+          home: NetworkAwareWidget(
+            onlineChild: AuthWidget(userSnapshot: userSnapshot),
+            offlineChild: const NoConnectionScreen(),
           ),
-          routes: {
-            Routes.LOGIN_SCREEN: (_) => LoginScreen(),
-            Routes.SIGNUP_SCREEN: (_) => SignupScreen(),
-            Routes.HOME_SCREEN: (_) => HomeScreen(),
-          },
+
+          // routes: {
+          //   Routes.LOGIN_SCREEN: (_) => LoginScreen(),
+          //   Routes.SIGNUP_SCREEN: (_) => SignupScreen(),
+          //   Routes.HOME_SCREEN: (_) => HomeScreen(),
+          // },
         ),
       ),
     );

@@ -11,23 +11,18 @@ class NetworkStatusService {
     });
   }
   final Connectivity connectivity;
-  bool firstTime = true;
+
   StreamController<NetworkStatus> networkStatusController =
       StreamController<NetworkStatus>();
 
   NetworkStatus networkStatus = NetworkStatus.Loading;
 
   void _getNetworkStatus(ConnectivityResult status) {
-    NetworkStatus newStatus = NetworkStatus.Loading;
     if (status == ConnectivityResult.mobile ||
         status == ConnectivityResult.wifi) {
-      newStatus = NetworkStatus.Online;
+      networkStatusController.add(NetworkStatus.Online);
     } else {
-      newStatus = NetworkStatus.Offline;
-    }
-    if (newStatus != networkStatus) {
-      networkStatus = newStatus;
-      networkStatusController.add(newStatus);
+      networkStatusController.add(NetworkStatus.Offline);
     }
   }
 }

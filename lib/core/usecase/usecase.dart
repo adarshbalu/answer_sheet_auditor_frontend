@@ -21,13 +21,13 @@ class Params extends Equatable {
   const Params({
     this.email,
     this.password,
-    this.keyword,
+    this.name,
     this.file,
     this.sms,
     this.verificationID,
     this.onPhoneVerified,
   });
-  final String keyword;
+  final String name;
   final String email;
   final String password;
   final File file;
@@ -36,5 +36,5 @@ class Params extends Equatable {
   final Function(String, bool) onPhoneVerified;
 
   @override
-  List<Object> get props => <Object>[keyword, email, password, file];
+  List<Object> get props => <Object>[name, email, password, file];
 }
