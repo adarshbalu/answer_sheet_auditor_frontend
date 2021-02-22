@@ -10,6 +10,11 @@ class ServerFailure extends Failure {
   List<Object> get props => <Object>[];
 }
 
+class CacheFailure extends Failure {
+  @override
+  List<Object> get props => <Object>[];
+}
+
 class InvalidInputFailure extends Failure {
   @override
   List<Object> get props => <Object>[];

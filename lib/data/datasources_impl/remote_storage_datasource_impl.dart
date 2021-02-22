@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:answer_sheet_auditor/core/error/exceptions.dart';
-import 'package:answer_sheet_auditor/data/datasources/storage_datasource.dart';
+import 'package:answer_sheet_auditor/data/datasources/remote_storage_datasource.dart';
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-class StorageRemoteDataSourceImpl extends StorageRemoteDataSource {
-  StorageRemoteDataSourceImpl(this.firebaseStorage);
+class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
+  RemoteStorageDataSourceImpl(this.firebaseStorage);
   final FirebaseStorage firebaseStorage;
 
   @override

@@ -10,6 +10,11 @@ class UploadException implements Exception {
   final String message;
 }
 
+class CacheException implements Exception {
+  CacheException({this.message = 'Some unknown error occurred'});
+  final String message;
+}
+
 class FilePickerException implements Exception {
   FilePickerException({this.message = 'Some unknown error occurred'});
   final String message;

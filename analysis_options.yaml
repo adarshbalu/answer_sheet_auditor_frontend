@@ -1,7 +1,7 @@
 include: package:lint/analysis_options_package.yaml
 
-#analyzer:
-#  exclude:
+analyzer:
+  exclude: answer_sheet_auditor_frontend/lib/generated_plugin_registrant.dart
 
 linter:
   rules:
