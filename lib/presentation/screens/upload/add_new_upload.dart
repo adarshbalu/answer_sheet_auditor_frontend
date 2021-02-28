@@ -1,8 +1,9 @@
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/blue_button.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/yellow_button.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
-import 'package:answer_sheet_auditor/presentation/widgets/blue_button.dart';
-import 'package:answer_sheet_auditor/presentation/widgets/text_input.dart';
-import 'package:answer_sheet_auditor/presentation/widgets/yellow_button.dart';
+import 'package:answer_sheet_auditor/presentation/widgets/added_text_file_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -118,7 +119,7 @@ This field can't be empty !''';
                               form.save();
                               context
                                   .read<StorageProvider>()
-                                  .uploadImageFile('asd');
+                                  .uploadImageFile(name);
                               form.reset();
                             }
                           });
@@ -167,44 +168,6 @@ This field can't be empty !''';
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class AddedTextFileCard extends StatelessWidget {
-  const AddedTextFileCard({
-    Key key,
-    @required this.name,
-  }) : super(key: key);
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {},
-      child: Card(
-        margin: const EdgeInsets.only(bottom: 24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            SvgPicture.asset(
-              Assets.DOCUMENT_ADDED,
-              height: 200,
-            ),
-            Text(
-              name,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
         ),
       ),
     );
