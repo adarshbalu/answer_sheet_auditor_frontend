@@ -20,6 +20,11 @@ class VisionImageException implements Exception {
   final String message;
 }
 
+class VisionTextException implements Exception {
+  VisionTextException({this.message = 'Some unknown error occurred'});
+  final String message;
+}
+
 class FilePickerException implements Exception {
   FilePickerException({this.message = 'Some unknown error occurred'});
   final String message;

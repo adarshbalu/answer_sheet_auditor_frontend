@@ -21,4 +21,16 @@ class TextRecognizerRepositoryImpl extends TextRecognizerRepository {
       return Left(VisionImageFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, VisionText>> getTextFromImage(
+      FirebaseVisionImage visionImage) async {
+    try {
+      final VisionText visionText =
+          await dataSource.getTextFromVisionImage(visionImage);
+      return Right(visionText);
+    } catch (e) {
+      return Left(VisionTextFailure());
+    }
+  }
 }

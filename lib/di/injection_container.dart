@@ -26,6 +26,7 @@ import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/text_recognition/get_vision_image_from_file.dart';
+import 'package:answer_sheet_auditor/domain/usecases/text_recognition/get_vision_text_from_vision_image.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/text_recognizer_provider.dart';
@@ -60,7 +61,7 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => TextRecognizerProvider(locator()),
+    () => TextRecognizerProvider(locator(), locator()),
   );
 
   //usecases
@@ -135,4 +136,5 @@ void _initStorageUseCases() {
 
 void _initTextRecognitionUseCases() {
   locator.registerLazySingleton(() => GetVisionImageFromFile(locator()));
+  locator.registerLazySingleton(() => GetVisionTextFromVisionImage(locator()));
 }

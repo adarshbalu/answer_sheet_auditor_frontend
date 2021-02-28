@@ -7,4 +7,6 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 abstract class TextRecognizerRepository {
   Future<Either<Failure, FirebaseVisionImage>> getVisionImageFromFile(
       File file);
+  Future<Either<Failure, VisionText>> getTextFromImage(
+      FirebaseVisionImage visionImage);
 }

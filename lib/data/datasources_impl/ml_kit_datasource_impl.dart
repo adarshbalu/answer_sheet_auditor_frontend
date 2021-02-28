@@ -22,4 +22,25 @@ class MLKitDataSourceImpl extends MLKitDataSource {
       throw VisionImageException();
     }
   }
+
+  @override
+  Future<VisionText> getTextFromVisionImage(
+      FirebaseVisionImage visionImage) async {
+    try {
+      final VisionText visionText =
+          await textRecognizer.processImage(visionImage);
+      if (visionText != null) {
+        return visionText;
+      } else {
+        throw VisionTextException();
+      }
+    } catch (e) {
+      throw VisionTextException();
+    }
+  }
+
+  @override
+  void dispose() {
+    textRecognizer.close();
+  }
 }
