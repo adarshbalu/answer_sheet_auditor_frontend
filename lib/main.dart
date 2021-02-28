@@ -5,6 +5,7 @@ import 'package:answer_sheet_auditor/core/presentation/widgets/network_aware_wid
 import 'package:answer_sheet_auditor/di/injection_container.dart' as di;
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
+import 'package:answer_sheet_auditor/presentation/providers/text_recognizer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => di.locator<AuthProvider>()),
         ChangeNotifierProvider(create: (_) => di.locator<StorageProvider>()),
+        ChangeNotifierProvider(
+            create: (_) => di.locator<TextRecognizerProvider>()),
         StreamProvider<NetworkStatus>(
           initialData: NetworkStatus.Loading,
           create: (_) =>

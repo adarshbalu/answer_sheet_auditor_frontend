@@ -42,29 +42,8 @@ class _AddNewUploadState extends State<AddNewUpload> {
                 Consumer<StorageProvider>(
                   builder: (_, provider, child) {
                     if (provider.textFileStatus == FileStatus.SUCCESS) {
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 24),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SvgPicture.asset(
-                              Assets.DOCUMENT_ADDED,
-                              height: 200,
-                            ),
-                            Text(
-                              provider.pickedFileName,
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                          ],
-                        ),
+                      return AddedTextFileCard(
+                        name: provider.pickedFileName,
                       );
                     } else if (provider.textFileStatus == FileStatus.ERROR) {
                       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -168,23 +147,19 @@ This field can't be empty !''';
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
+                    } else if (provider.uploadStatus == UploadStatus.UPLOADED) {
+                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                        Fluttertoast.showToast(msg: 'File uploaded');
+                        Navigator.pop(context);
+                      });
+                      return child;
+                    } else if (provider.uploadStatus == UploadStatus.ERROR) {
+                      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                        Fluttertoast.showToast(msg: 'File upload failed');
+                      });
+                      return child;
                     } else {
-                      if (provider.uploadStatus == UploadStatus.UPLOADED) {
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((timeStamp) {
-                          Fluttertoast.showToast(msg: 'File uploaded');
-                          Navigator.pop(context);
-                        });
-                        return child;
-                      } else if (provider.uploadStatus == UploadStatus.ERROR) {
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((timeStamp) {
-                          Fluttertoast.showToast(msg: 'File upload failed');
-                        });
-                        return child;
-                      } else {
-                        return child;
-                      }
+                      return child;
                     }
                   },
                   child: const SizedBox.shrink(),
@@ -192,6 +167,44 @@ This field can't be empty !''';
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddedTextFileCard extends StatelessWidget {
+  const AddedTextFileCard({
+    Key key,
+    @required this.name,
+  }) : super(key: key);
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {},
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 24),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 16,
+            ),
+            SvgPicture.asset(
+              Assets.DOCUMENT_ADDED,
+              height: 200,
+            ),
+            Text(
+              name,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+          ],
         ),
       ),
     );
