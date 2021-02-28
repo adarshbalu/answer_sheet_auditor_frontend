@@ -23,17 +23,11 @@ class Params extends Equatable {
     this.password,
     this.name,
     this.file,
-    this.sms,
-    this.verificationID,
-    this.onPhoneVerified,
   });
   final String name;
   final String email;
   final String password;
   final File file;
-  final String sms;
-  final String verificationID;
-  final Function(String, bool) onPhoneVerified;
 
   @override
   List<Object> get props => <Object>[name, email, password, file];

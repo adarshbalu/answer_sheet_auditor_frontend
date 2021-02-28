@@ -25,6 +25,11 @@ class UploadFailure extends Failure {
   List<Object> get props => <Object>[];
 }
 
+class VisionImageFailure extends Failure {
+  @override
+  List<Object> get props => <Object>[];
+}
+
 class FilePickerFailure extends Failure {
   @override
   List<Object> get props => <Object>[];

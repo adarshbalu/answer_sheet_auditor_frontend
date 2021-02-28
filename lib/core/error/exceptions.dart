@@ -15,6 +15,11 @@ class CacheException implements Exception {
   final String message;
 }
 
+class VisionImageException implements Exception {
+  VisionImageException({this.message = 'Some unknown error occurred'});
+  final String message;
+}
+
 class FilePickerException implements Exception {
   FilePickerException({this.message = 'Some unknown error occurred'});
   final String message;
