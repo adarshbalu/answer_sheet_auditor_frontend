@@ -98,9 +98,8 @@ class LocalDataSourceImpl extends LocalDataSource {
           await sharedPreferences.reload();
           return value;
         });
-      } else {
-        throw CacheException();
       }
+      return false;
     } catch (e) {
       throw CacheException();
     }

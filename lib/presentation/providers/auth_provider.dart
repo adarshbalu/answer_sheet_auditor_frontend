@@ -8,7 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-enum AuthStatus { UNAUTHENTICATED, AUTHENTICATED, LOADING, ERROR }
+enum AuthStatus { UNAUTHENTICATED, AUTHENTICATED, LOADING, ERROR, NONE }
 
 class AuthProvider extends ChangeNotifier with EquatableMixin {
   AuthProvider(
@@ -31,7 +31,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
   @override
   List<Object> get props => [];
 
-  AuthStatus _status = AuthStatus.UNAUTHENTICATED;
+  AuthStatus _status = AuthStatus.NONE;
 
   String _errorMessage;
 
@@ -74,7 +74,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
             _errorMessage = _mapFailureToMessage(failure);
             notifyListeners();
             Future.delayed(const Duration(seconds: 2), () {
-              _status = AuthStatus.UNAUTHENTICATED;
+              _status = AuthStatus.NONE;
               notifyListeners();
             });
           },
@@ -101,7 +101,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
         _errorMessage = _mapFailureToMessage(failure);
         notifyListeners();
         Future.delayed(const Duration(seconds: 2), () {
-          _status = AuthStatus.UNAUTHENTICATED;
+          _status = AuthStatus.NONE;
           notifyListeners();
         });
       },
@@ -131,7 +131,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
       },
       (_) {
         _user = null;
-        _status = AuthStatus.UNAUTHENTICATED;
+        _status = AuthStatus.NONE;
         notifyListeners();
       },
     );

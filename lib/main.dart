@@ -61,9 +61,14 @@ class MateApp extends StatelessWidget {
             iconTheme: AppTheme.ICON_THEME_DATA,
           ),
           title: 'Answer sheet Auditor',
-          home: NetworkAwareWidget(
-            onlineChild: AuthWidget(userSnapshot: userSnapshot),
-            offlineChild: const NoConnectionScreen(),
+          home: WillPopScope(
+            onWillPop: () async {
+              return false;
+            },
+            child: NetworkAwareWidget(
+              onlineChild: AuthWidget(userSnapshot: userSnapshot),
+              offlineChild: const NoConnectionScreen(),
+            ),
           ),
 
           // routes: {

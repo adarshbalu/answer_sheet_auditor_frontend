@@ -1,4 +1,6 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/blue_button.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/green_button.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
@@ -16,9 +18,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKeyStepTwo = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKeyStepThree = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordFormKey = GlobalKey<FormState>();
 
   static const Duration _pageTransitionDuration = Duration(milliseconds: 300);
   static const Curve _pageAnimationCurve = Cubic(0.1, 0.2, 0.7, 1.0);
@@ -27,7 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   PageController _pageController;
 
-  String _userName, _email, _password;
+  String _email, _password;
 
   Size screenSize;
   TextTheme textTheme;
@@ -41,6 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -59,7 +61,6 @@ class _SignupScreenState extends State<SignupScreen> {
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
-              _buildPersonalDetailsSection(),
               _buildEmailSection(),
               _buildPasswordSection(),
               _buildFinishSection(),
@@ -99,110 +100,6 @@ I'm already a member, ''',
     );
   }
 
-  ///[return widget for Signup Step One]
-  Widget _buildPersonalDetailsSection() {
-    return Padding(
-      padding: const EdgeInsets.all(22.0),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //back icon
-            InkWell(
-              onTap: () => Navigator.of(context).pop(),
-              child: SvgPicture.asset(
-                Assets.BACK,
-              ),
-            ),
-            //header space
-            SizedBox(height: screenSize.height * 0.1),
-            //heading text
-            SizedBox(
-              width: screenSize.width * 0.4,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  'Hi There! :)',
-                  style: textTheme.headline1,
-                ),
-              ),
-            ),
-            //subtitle text
-            SizedBox(
-              width: screenSize.width * 0.6,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Introduce Yourself',
-                  style: textTheme.subtitle1,
-                ),
-              ),
-            ),
-            //spacing
-            SizedBox(
-              height: screenSize.height * 0.08,
-            ),
-            //input form
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  //email input
-                  TextInput(
-                    label: 'Name',
-                    autofocus: true,
-                    initialValue: _userName,
-                    inputType: TextInputType.text,
-                    onSaved: (String value) => _userName = value.trim(),
-                    validator: (String value) => value.trim().isEmpty
-                        ? '''
-This field can't be empty!'''
-                        : null,
-                  ),
-                  //spacing
-                  SizedBox(height: screenSize.height * 0.04),
-                ],
-              ),
-            ),
-            //spacing
-            SizedBox(height: screenSize.height * 0.06),
-            //login button
-            Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(
-                width: screenSize.width * 0.3,
-                child: ElevatedButton(
-                  onPressed: () {
-                    //unfocusing
-                    FocusScope.of(context).unfocus();
-                    //verification step 1
-                    final form = _formKey.currentState;
-                    //validating
-                    if (form.validate()) {
-                      //saving form
-                      form.save();
-                      //redirecting to next step
-                      _pageController.animateToPage(
-                        1,
-                        duration: _pageTransitionDuration,
-                        curve: _pageAnimationCurve,
-                      );
-                    }
-                  },
-                  child: const Text('Next'),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   ///[return widget for Signup Step Two]
   Widget _buildEmailSection() {
     return Padding(
@@ -214,11 +111,8 @@ This field can't be empty!'''
           children: <Widget>[
             //back icon
             InkWell(
-              onTap: () => _pageController.animateToPage(
-                0,
-                duration: _pageTransitionDuration,
-                curve: _pageAnimationCurve,
-              ),
+              onTap: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => LoginScreen())),
               child: SvgPicture.asset(
                 Assets.BACK,
               ),
@@ -232,7 +126,7 @@ This field can't be empty!'''
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.bottomLeft,
                 child: Text(
-                  'Hi $_userName!',
+                  'Hi !',
                   style: textTheme.headline1,
                 ),
               ),
@@ -256,7 +150,7 @@ What's your email ? ''',
             ),
             //input form
             Form(
-              key: _formKeyStepTwo,
+              key: _emailFormKey,
               child: TextInput(
                 label: 'Email ID',
                 initialValue: _email,
@@ -283,13 +177,14 @@ This field can't be empty !''';
               alignment: Alignment.centerRight,
               child: SizedBox(
                 width: screenSize.width * 0.3,
-                child: ElevatedButton(
+                child: BlueButton(
+                  label: 'Next',
                   onPressed: () {
                     //unfocusing
                     FocusScope.of(context).unfocus();
 
                     //verification step 1
-                    final form = _formKeyStepTwo.currentState;
+                    final form = _emailFormKey.currentState;
 
                     //validating
                     if (form.validate()) {
@@ -298,13 +193,12 @@ This field can't be empty !''';
 
                       //redirecting to next step
                       _pageController.animateToPage(
-                        2,
+                        1,
                         duration: _pageTransitionDuration,
                         curve: _pageAnimationCurve,
                       );
                     }
                   },
-                  child: const Text('Next'),
                 ),
               ),
             ),
@@ -326,7 +220,7 @@ This field can't be empty !''';
             //back icon
             InkWell(
               onTap: () => _pageController.animateToPage(
-                1,
+                0,
                 duration: _pageTransitionDuration,
                 curve: _pageAnimationCurve,
               ),
@@ -367,7 +261,7 @@ Let's Think ''',
             ),
             //input form
             Form(
-              key: _formKeyStepThree,
+              key: _passwordFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -414,28 +308,28 @@ Password and confirm password didn't match !''';
               alignment: Alignment.centerRight,
               child: SizedBox(
                 width: screenSize.width * 0.3,
-                child: ElevatedButton(
-                    onPressed: () {
-                      //unfocusing
-                      FocusScope.of(context).unfocus();
+                child: BlueButton(
+                  label: 'Next',
+                  onPressed: () {
+                    //unfocusing
+                    FocusScope.of(context).unfocus();
 
-                      //verification step 1
-                      final form = _formKeyStepThree.currentState;
+                    final form = _passwordFormKey.currentState;
 
-                      //validating
-                      if (form.validate()) {
-                        //saving form
-                        form.save();
+                    //validating
+                    if (form.validate()) {
+                      //saving form
+                      form.save();
 
-                        //redirecting to next step
-                        _pageController.animateToPage(
-                          3,
-                          duration: _pageTransitionDuration,
-                          curve: _pageAnimationCurve,
-                        );
-                      }
-                    },
-                    child: const Text('Next')),
+                      //redirecting to next step
+                      _pageController.animateToPage(
+                        2,
+                        duration: _pageTransitionDuration,
+                        curve: _pageAnimationCurve,
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],
@@ -476,7 +370,7 @@ Password and confirm password didn't match !''';
               //back icon
               InkWell(
                 onTap: () => _pageController.animateToPage(
-                  3,
+                  1,
                   duration: _pageTransitionDuration,
                   curve: _pageAnimationCurve,
                 ),
@@ -499,49 +393,40 @@ Let's Finish''',
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 8,
+              ),
               //subtitle text
               SizedBox(
-                width: screenSize.width * 0.6,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Click on register',
-                    style: textTheme.subtitle1,
-                  ),
+                width: screenSize.width,
+                child: Text(
+                  'By clicking on register you are agreeing to terms and conditions.',
+                  style: textTheme.subtitle1,
                 ),
               ),
               //spacing
-              SizedBox(
-                height: screenSize.height * 0.08,
+              const SizedBox(
+                height: 24,
+              ),
+              SvgPicture.asset(
+                Assets.ADD_USER,
+                height: 300,
               ),
 
               //spacing
-              SizedBox(height: screenSize.height * 0.06),
-
+              const SizedBox(
+                height: 24,
+              ),
               //login button
               Align(
                 alignment: Alignment.centerRight,
-                child: SizedBox(
-                  width: screenSize.width * 0.3,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      //unfocusing
-                      FocusScope.of(context).unfocus();
+                child: GreenButton(
+                  label: 'Register',
+                  onPressed: () async {
+                    FocusScope.of(context).unfocus();
 
-                      //verification step 5
-                      //   final form = _formKeyStepFour.currentState;
-
-                      // if (form.validate()) {
-                      //   form.save();
-
-                      authProvider.signupUserWithEmail(_email, _password);
-                      // } else {
-                      //   //Phone verification is unsuccessful.
-                      // }
-                    },
-                    child: const FittedBox(child: Text('Register')),
-                  ),
+                    authProvider.signupUserWithEmail(_email, _password);
+                  },
                 ),
               ),
             ],

@@ -25,7 +25,7 @@ class _LoggedUserBuilderState extends State<LoggedUserBuilder> {
     super.dispose();
   }
 
-  static List<Widget> children = [
+  final List<Widget> children = [
     HomeScreen(),
     ResultsScreen(),
     SettingsScreen(),

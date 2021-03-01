@@ -1,4 +1,5 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/blue_button.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
@@ -124,35 +125,31 @@ This field can't be empty!'''
                         //spacing
                         SizedBox(height: screenSize.height * 0.06),
                         //login button
-                        SizedBox(
-                          width: screenSize.width,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              final form = _formKey.currentState;
+                        BlueButton(
+                          label: 'Login',
+                          onPressed: () async {
+                            final form = _formKey.currentState;
 
-                              if (form.validate()) {
-                                //saving the form
-                                form.save();
-                                await authProvider.loginUserWithEmail(
-                                  _email,
-                                  _password,
-                                );
-                                if (authProvider.status ==
-                                    AuthStatus.AUTHENTICATED) {
-                                  Fluttertoast.showToast(
-                                      msg: 'Authenticated Successfully',
-                                      toastLength: Toast.LENGTH_LONG);
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: authProvider.error ??
-                                          'Error Occurred',
-                                      toastLength: Toast.LENGTH_LONG);
-                                }
+                            if (form.validate()) {
+                              //saving the form
+                              form.save();
+                              await authProvider.loginUserWithEmail(
+                                _email,
+                                _password,
+                              );
+                              if (authProvider.status ==
+                                  AuthStatus.AUTHENTICATED) {
+                                Fluttertoast.showToast(
+                                    msg: 'Authenticated Successfully',
+                                    toastLength: Toast.LENGTH_LONG);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: authProvider.error ?? 'Error Occurred',
+                                    toastLength: Toast.LENGTH_LONG);
                               }
-                            },
-                            child: const Text('Login'),
-                          ),
-                        ),
+                            }
+                          },
+                        )
                       ],
                     ),
                   ),
