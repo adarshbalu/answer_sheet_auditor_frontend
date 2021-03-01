@@ -10,6 +10,7 @@ class UploadImageToStorage implements UseCase<AnswerSheet, Params> {
 
   @override
   Future<Either<Failure, AnswerSheet>> call(Params params) {
-    return repository.uploadAnswerSheetToStorage(params.file, params.name);
+    return repository.uploadAnswerSheetToStorage(
+        params.file, params.name, params.uid);
   }
 }

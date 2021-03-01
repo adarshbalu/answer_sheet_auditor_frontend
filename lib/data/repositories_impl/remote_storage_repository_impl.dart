@@ -15,10 +15,10 @@ class RemoteStorageRepositoryImpl extends RemoteStorageRepository {
 
   @override
   Future<Either<Failure, AnswerSheet>> uploadAnswerSheetToStorage(
-      File file, String name) async {
+      File file, String name, String uid) async {
     try {
       final result =
-          await storageRemoteDataSource.uploadAnswerSheet(file, name);
+          await storageRemoteDataSource.uploadAnswerSheet(file, name, uid);
 
       return Right(result);
     } catch (e) {
@@ -45,10 +45,11 @@ class RemoteStorageRepositoryImpl extends RemoteStorageRepository {
   }
 
   @override
-  Future<Either<Failure, AnswerSheet>> uploadAnswerKeyToStorage(
-      File file, String name) async {
+  Future<Either<Failure, String>> uploadAnswerKeyToStorage(
+      File file, String name, String uid) async {
     try {
-      final result = await storageRemoteDataSource.uploadAnswerkey(file, name);
+      final result =
+          await storageRemoteDataSource.uploadAnswerkey(file, name, uid);
 
       return Right(result);
     } catch (e) {

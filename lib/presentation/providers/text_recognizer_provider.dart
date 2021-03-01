@@ -52,20 +52,20 @@ class TextRecognizerProvider extends ChangeNotifier {
   }
 
   void getTextFromVisionText() {
-    final String text = _visionText.text;
-    print(text);
-    for (final TextBlock block in _visionText.blocks) {
-      // final Rect boundingBox = block.boundingBox;
-      // final List<Offset> cornerPoints = block.cornerPoints;
-      // final String text = block.text;
-      // final List<RecognizedLanguage> languages = block.recognizedLanguages;
+    // final String text = _visionText.text;
+    //
+    // for (final TextBlock block in _visionText.blocks) {
+    // final Rect boundingBox = block.boundingBox;
+    // final List<Offset> cornerPoints = block.cornerPoints;
+    // final String text = block.text;
+    // final List<RecognizedLanguage> languages = block.recognizedLanguages;
 
-      for (final TextLine line in block.lines) {
-        for (final TextElement element in line.elements) {
-          print(element.text);
-        }
-      }
-    }
+    // for (final TextLine line in block.lines) {
+    //   for (final TextElement element in line.elements) {
+    //
+    //   }
+    // }
+    //}
   }
 
   VisionImageFromFileStatus _visionImageFromFileStatus;

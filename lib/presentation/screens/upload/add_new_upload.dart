@@ -4,6 +4,7 @@ import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:answer_sheet_auditor/presentation/widgets/added_text_file_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -111,16 +112,16 @@ This field can't be empty !''';
                     if (provider.textFileStatus == FileStatus.SUCCESS) {
                       return BlueButton(
                           label: 'Upload key',
-                          onPressed: () {
+                          onPressed: () async {
                             final form = _formKey.currentState;
 
                             if (form.validate()) {
                               //saving the form
                               form.save();
-                              context
+                              final String uid = context.read<User>().uid;
+                              await context
                                   .read<StorageProvider>()
-                                  .uploadImageFile(name);
-                              form.reset();
+                                  .uploadTextFile(name, uid);
                             }
                           });
                     }
@@ -128,13 +129,13 @@ This field can't be empty !''';
                   },
                   child: YellowButton(
                     label: 'Add key',
-                    onPressed: () {
+                    onPressed: () async {
                       final form = _formKey.currentState;
 
                       if (form.validate()) {
                         form.save();
 
-                        context.read<StorageProvider>().pickText();
+                        await context.read<StorageProvider>().pickText();
                       }
                     },
                   ),
@@ -144,17 +145,18 @@ This field can't be empty !''';
                 ),
                 Consumer<StorageProvider>(
                   builder: (_, provider, child) {
-                    if (provider.uploadStatus == UploadStatus.UPLOADING) {
+                    if (provider.keyUploadStatus == UploadStatus.UPLOADING) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (provider.uploadStatus == UploadStatus.UPLOADED) {
+                    } else if (provider.keyUploadStatus ==
+                        UploadStatus.UPLOADED) {
                       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                         Fluttertoast.showToast(msg: 'File uploaded');
                         Navigator.pop(context);
                       });
                       return child;
-                    } else if (provider.uploadStatus == UploadStatus.ERROR) {
+                    } else if (provider.keyUploadStatus == UploadStatus.ERROR) {
                       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                         Fluttertoast.showToast(msg: 'File upload failed');
                       });

@@ -26,9 +26,12 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SvgPicture.asset(
-                Assets.UPLOAD_FILES,
-                height: 200,
+              InkWell(
+                onTap: () {},
+                child: SvgPicture.asset(
+                  Assets.UPLOAD_FILES,
+                  height: 200,
+                ),
               ),
               const SizedBox(
                 height: 24,

@@ -19,18 +19,20 @@ class NoParams extends Equatable {
 }
 
 class Params extends Equatable {
-  const Params({
-    this.email,
-    this.password,
-    this.name,
-    this.file,
-    this.visionImage,
-  });
+  const Params(
+      {this.email,
+      this.password,
+      this.name,
+      this.file,
+      this.visionImage,
+      this.uid});
   final String name;
+  final String uid;
   final String email;
   final String password;
   final File file;
   final FirebaseVisionImage visionImage;
   @override
-  List<Object> get props => <Object>[name, email, password, file, visionImage];
+  List<Object> get props =>
+      <Object>[name, email, password, file, visionImage, uid];
 }

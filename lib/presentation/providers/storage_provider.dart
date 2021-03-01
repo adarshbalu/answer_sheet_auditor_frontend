@@ -20,7 +20,9 @@ class StorageProvider extends ChangeNotifier {
   final PickImageFile pickImageFile;
   final UploadImageToStorage uploadImageFileToStorage;
   final UploadTextToStorage uploadTextToStorage;
-  UploadStatus _uploadStatus;
+  UploadStatus _uploadStatus, _keyUploadStatus;
+
+  UploadStatus get keyUploadStatus => _keyUploadStatus;
   FileStatus _imageFileStatus, _textFileStatus;
 
   FileStatus get textFileStatus => _textFileStatus;
@@ -34,6 +36,9 @@ class StorageProvider extends ChangeNotifier {
   String get pickedFileName => _pickedFileName;
 
   List<AnswerSheet> get answerSheets => _answerSheets;
+  String _answerKeyURL;
+
+  String get answerKeyURL => _answerKeyURL;
 
   UploadStatus get uploadStatus => _uploadStatus;
 
@@ -84,11 +89,11 @@ class StorageProvider extends ChangeNotifier {
 
   File get pickedFile => _pickedFile;
 
-  Future<void> uploadImageFile(String name) async {
+  Future<void> uploadImageFile(String name, String uid) async {
     _uploadStatus = UploadStatus.UPLOADING;
     notifyListeners();
-    final failureOrUpdate =
-        await uploadImageFileToStorage(Params(file: pickedFile, name: name));
+    final failureOrUpdate = await uploadImageFileToStorage(
+        Params(file: pickedFile, name: name, uid: uid));
     failureOrUpdate.fold((failure) {
       _uploadStatus = UploadStatus.ERROR;
       notifyListeners();
@@ -104,22 +109,21 @@ class StorageProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> uploadTextFile(String name) async {
-    _uploadStatus = UploadStatus.UPLOADING;
+  Future<void> uploadTextFile(String name, String uid) async {
+    _keyUploadStatus = UploadStatus.UPLOADING;
     notifyListeners();
-    final failureOrUpdate =
-        await uploadImageFileToStorage(Params(file: pickedFile, name: name));
+    final failureOrUpdate = await uploadTextToStorage(
+        Params(file: pickedFile, name: name, uid: uid));
     failureOrUpdate.fold((failure) {
-      _uploadStatus = UploadStatus.ERROR;
+      _keyUploadStatus = UploadStatus.ERROR;
       notifyListeners();
       Future.delayed(const Duration(seconds: 2), () {
-        _uploadStatus = UploadStatus.NONE;
+        _keyUploadStatus = UploadStatus.NONE;
         notifyListeners();
       });
-    }, (answerSheet) {
-      // _answerSheets.add(answerSheet);
-      _uploadStatus = UploadStatus.UPLOADED;
-      _status = Status.LOADED;
+    }, (downloadURL) {
+      _answerKeyURL = downloadURL;
+      _keyUploadStatus = UploadStatus.UPLOADED;
       notifyListeners();
     });
   }

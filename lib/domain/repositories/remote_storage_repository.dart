@@ -6,9 +6,9 @@ import 'package:dartz/dartz.dart';
 
 abstract class RemoteStorageRepository {
   Future<Either<Failure, AnswerSheet>> uploadAnswerSheetToStorage(
-      File file, String name);
-  Future<Either<Failure, AnswerSheet>> uploadAnswerKeyToStorage(
-      File file, String name);
+      File file, String name, String uid);
+  Future<Either<Failure, String>> uploadAnswerKeyToStorage(
+      File file, String name, String uid);
   Future<Either<Failure, File>> pickImageFile();
   Future<Either<Failure, File>> pickTextFile();
 }
