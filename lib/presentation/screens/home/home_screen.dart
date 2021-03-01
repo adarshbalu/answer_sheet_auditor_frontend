@@ -1,12 +1,11 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/blue_button.dart';
-import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:answer_sheet_auditor/presentation/screens/upload/add_new_sheet.dart';
 import 'package:answer_sheet_auditor/presentation/screens/upload/add_new_upload.dart';
+import 'package:answer_sheet_auditor/presentation/widgets/answer_key_not_added.dart';
 import 'package:answer_sheet_auditor/presentation/widgets/upload_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -119,37 +118,5 @@ class HomeScreen extends StatelessWidget {
         ),
       );
     }
-  }
-}
-
-class AnswerKeyNotAdded extends StatelessWidget {
-  const AnswerKeyNotAdded({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        InkWell(
-          onTap: () {},
-          child: SvgPicture.asset(
-            Assets.UPLOAD_FILES,
-            height: 200,
-          ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        Text(
-          'Add new exam',
-          textAlign: TextAlign.center,
-          style: textTheme.subtitle1,
-        ),
-      ],
-    );
   }
 }

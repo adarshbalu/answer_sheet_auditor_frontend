@@ -3,6 +3,7 @@ import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/yellow_bu
 import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
+import 'package:answer_sheet_auditor/presentation/widgets/added_sheet_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -65,7 +66,7 @@ class _AddNewSheetState extends State<AddNewSheet> {
                 Consumer<StorageProvider>(
                   builder: (_, provider, child) {
                     if (provider.imageFileStatus == FileStatus.SUCCESS) {
-                      return AddNewSheetCard(
+                      return AddedSheetCard(
                         name: name,
                       );
                     } else if (provider.imageFileStatus == FileStatus.ERROR) {
@@ -167,43 +168,6 @@ This field can't be empty !''';
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class AddNewSheetCard extends StatelessWidget {
-  const AddNewSheetCard({Key key, this.name}) : super(key: key);
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        await context.read<StorageProvider>().pickImage();
-      },
-      child: Card(
-        margin: const EdgeInsets.only(bottom: 24),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            SvgPicture.asset(
-              Assets.DOCUMENT_ADDED,
-              height: 200,
-            ),
-            Text(
-              name,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-          ],
         ),
       ),
     );
