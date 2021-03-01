@@ -4,6 +4,8 @@ import 'package:answer_sheet_auditor/core/error/exceptions.dart';
 import 'package:answer_sheet_auditor/data/datasources/remote_storage_datasource.dart';
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 
 class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
@@ -14,24 +16,42 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
   Future<AnswerSheet> uploadAnswerSheet(
       File file, String name, String uid) async {
     try {
+      final File fileToUpload = File(file.path);
+      final Uuid uuid = Uuid();
+      final String id = uuid.v4();
+      final DateFormat dateFormat = DateFormat.yMMMMd();
+      final String timeStamp = dateFormat.format(DateTime.now());
+
+      final String fileName = fileToUpload.path.split('/').last;
+      final String extension = path.extension(file.path).toString();
       final SettableMetadata metadata = SettableMetadata(
         // cacheControl: 'max-age=60',
         customMetadata: <String, String>{
           'name': name,
+          'id': id,
+          'uid': uid,
+          'fileName': fileName,
+          'timeStamp': timeStamp
         },
       );
-      final Uuid uuid = Uuid();
+
       final String folderName = uid;
-      final String id = uuid.v4();
-      final Reference reference =
-          firebaseStorage.ref().child('answer_sheet_uploads/$folderName/$id');
-      final UploadTask uploadTask = reference.putFile(file, metadata);
-      final TaskSnapshot storageTaskSnapshot = uploadTask.snapshot;
-      return storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) async {
-        return AnswerSheet(url: downloadUrl, name: name, id: id);
-      }, onError: (err) {
-        throw UploadException(message: err.toString());
+      final Reference reference = firebaseStorage
+          .ref('/answer_sheet_uploads')
+          .child(folderName)
+          .child(name)
+          .child('$id$extension');
+      AnswerSheet answerSheet;
+      final UploadTask uploadTask = reference.putFile(fileToUpload, metadata);
+      await uploadTask.whenComplete(() async {
+        final String downloadUrl = await reference.getDownloadURL();
+        answerSheet = AnswerSheet(url: downloadUrl, name: name, id: id);
       });
+      uploadTask.onError((error, stackTrace) {
+        throw UploadException(message: error.toString());
+      });
+
+      return answerSheet;
     } catch (e) {
       throw UploadException(message: e.toString());
     }
@@ -43,17 +63,29 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
       final File fileToUpload = File(file.path);
       final Uuid uuid = Uuid();
       final String id = uuid.v4();
+      final DateFormat dateFormat = DateFormat.yMMMMd();
+      final String timeStamp = dateFormat.format(DateTime.now());
+      final String fileName = fileToUpload.path.split('/').last;
+
+      final String extension = path.extension(file.path).toString();
       final SettableMetadata metadata = SettableMetadata(
         // cacheControl: 'max-age=60',
-        customMetadata: <String, String>{'name': name, 'id': id},
+        customMetadata: <String, String>{
+          'name': name,
+          'id': id,
+          'uid': uid,
+          'fileName': fileName,
+          'timeStamp': timeStamp
+        },
       );
 
       final String folderName = uid;
 
       final Reference reference = firebaseStorage
-          .ref('/answer_key')
+          .ref('/answer_key_uploads')
           .child(folderName)
-          .child('$name.txt');
+          .child(name)
+          .child('$id$extension');
       String downloadUrl;
       final UploadTask uploadTask = reference.putFile(fileToUpload, metadata);
       await uploadTask.whenComplete(() async {
