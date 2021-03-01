@@ -1,9 +1,9 @@
 import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/screens/auth/login_screen.dart';
-import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
-import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
+import 'package:answer_sheet_auditor/presentation/screens/home/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' hide TextInput;
 import 'package:flutter_svg/flutter_svg.dart';
@@ -459,7 +459,7 @@ Password and confirm password didn't match !''';
         } else if (provider.status == AuthStatus.AUTHENTICATED) {
           Future.delayed(Duration.zero, () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => HomeScreen()));
+                MaterialPageRoute(builder: (_) => LoggedUserBuilder()));
           });
           return const SizedBox.shrink();
         } else {

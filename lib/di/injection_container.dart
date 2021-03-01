@@ -28,6 +28,7 @@ import 'package:answer_sheet_auditor/domain/usecases/storage/upload_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/text_recognition/get_vision_image_from_file.dart';
 import 'package:answer_sheet_auditor/domain/usecases/text_recognition/get_vision_text_from_vision_image.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
+import 'package:answer_sheet_auditor/presentation/providers/bottom_nav_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/text_recognizer_provider.dart';
 import 'package:connectivity/connectivity.dart';
@@ -58,6 +59,10 @@ Future<void> init() async {
 
   locator.registerFactory(
     () => StorageProvider(locator(), locator(), locator(), locator()),
+  );
+
+  locator.registerFactory(
+    () => BottomNavProvider(),
   );
 
   locator.registerFactory(
