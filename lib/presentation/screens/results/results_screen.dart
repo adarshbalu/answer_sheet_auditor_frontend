@@ -10,7 +10,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text('Results'),
+        child: const Text('Results'),
       ),
     );
   }
