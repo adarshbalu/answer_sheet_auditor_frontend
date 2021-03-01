@@ -73,7 +73,7 @@ Future<void> init() async {
   //repository
 
   locator.registerLazySingleton<UserAuthRepository>(
-      () => UserAuthRepositoryImpl(locator()));
+      () => UserAuthRepositoryImpl(locator(), locator()));
 
   locator.registerLazySingleton<RemoteStorageRepository>(
       () => RemoteStorageRepositoryImpl(locator(), locator()));
@@ -89,7 +89,7 @@ Future<void> init() async {
   //data sources
 
   locator.registerLazySingleton<UserAuthRemoteDataSource>(
-      () => UserAuthRemoteDataSourceImpl(locator()));
+      () => UserAuthRemoteDataSourceImpl(locator(), locator()));
 
   locator.registerLazySingleton<FileDataSource>(() => FileDataSouceImpl());
 

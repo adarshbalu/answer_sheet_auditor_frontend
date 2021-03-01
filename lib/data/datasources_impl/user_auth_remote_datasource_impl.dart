@@ -1,22 +1,25 @@
+import 'dart:convert';
+
 import 'package:answer_sheet_auditor/core/error/messages.dart';
+import 'package:answer_sheet_auditor/core/utils/url.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 import '../../core/error/exceptions.dart' as exc;
 import '../datasources/user_auth_remote_datasource.dart';
 
 class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
-  UserAuthRemoteDataSourceImpl(this.auth);
+  UserAuthRemoteDataSourceImpl(this.auth, this.client);
   final FirebaseAuth auth;
-
+  final http.Client client;
   @override
-  Future<User> signUpWithEmail(String email, String password) async {
+  Future<User> signUpWithEmailOnFirebase(String email, String password) async {
     try {
       final UserCredential signedUpUser =
           await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
       return signedUpUser?.user;
     } catch (error) {
       switch (error.code.toString()) {
@@ -39,7 +42,7 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
   }
 
   @override
-  Future<User> signInWithEmail(String email, String password) async {
+  Future<User> signInWithEmailOnFirebase(String email, String password) async {
     try {
       final UserCredential user = await auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -85,5 +88,50 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
   @override
   Future<User> getCurrentUser() async {
     return auth.currentUser;
+  }
+
+  @override
+  Future<String> signInUser(String email, String password) async {
+    try {
+      const String url = URL.LOG_IN_URL;
+      final Map<String, dynamic> body = <String, dynamic>{
+        'email': email,
+        'password': password,
+      };
+      final http.Response response = await client.post(url, body: body);
+      final int statusCode = response.statusCode;
+      if (statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final String jwt = data['token'].toString();
+        return jwt;
+      } else {
+        throw exc.AuthException();
+      }
+    } catch (e) {
+      throw exc.AuthException();
+    }
+  }
+
+  @override
+  Future<String> signUpUser(String email, String password, String uid) async {
+    try {
+      const String url = URL.SIGN_UP_URL;
+      final Map<String, dynamic> body = <String, dynamic>{
+        'email': email,
+        'password': password,
+        'fbid': uid,
+      };
+      final http.Response response = await client.post(url, body: body);
+      final int statusCode = response.statusCode;
+      if (statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final String jwt = data['token'].toString();
+        return jwt;
+      } else {
+        throw exc.AuthException();
+      }
+    } catch (e) {
+      throw exc.AuthException();
+    }
   }
 }

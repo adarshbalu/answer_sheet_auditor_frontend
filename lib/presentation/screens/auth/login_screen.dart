@@ -2,7 +2,6 @@ import 'package:answer_sheet_auditor/core/presentation/theme/theme.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/screens/auth/sign_up.dart';
-import 'package:answer_sheet_auditor/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -140,9 +139,9 @@ This field can't be empty!'''
                                 );
                                 if (authProvider.status ==
                                     AuthStatus.AUTHENTICATED) {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (_) => HomeScreen()));
+                                  Fluttertoast.showToast(
+                                      msg: 'Authenticated Successfully',
+                                      toastLength: Toast.LENGTH_LONG);
                                 } else {
                                   Fluttertoast.showToast(
                                       msg: authProvider.error ??
