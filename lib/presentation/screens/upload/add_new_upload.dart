@@ -91,16 +91,16 @@ class _AddNewUploadState extends State<AddNewUpload> {
                 Form(
                   key: _formKey,
                   child: TextInput(
-                    label: 'Name',
-                    inputType: TextInputType.emailAddress,
+                    label: 'Name of the exam',
+                    inputType: TextInputType.text,
                     onSaved: (String value) => name = value.trim(),
                     validator: (String value) {
                       if (value.trim().isEmpty) {
                         return '''
 This field can't be empty !''';
                       }
-                      if (value.trim().length < 5) {
-                        return 'Enter name with more than 5 characters !';
+                      if (value.trim().length < 4) {
+                        return 'Enter name with more than 4 characters !';
                       }
                       return null;
                     },

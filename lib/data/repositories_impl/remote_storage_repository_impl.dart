@@ -15,10 +15,10 @@ class RemoteStorageRepositoryImpl extends RemoteStorageRepository {
 
   @override
   Future<Either<Failure, AnswerSheet>> uploadAnswerSheetToStorage(
-      File file, String name, String uid) async {
+      File file, String name, String uid, String examName) async {
     try {
-      final result =
-          await storageRemoteDataSource.uploadAnswerSheet(file, name, uid);
+      final result = await storageRemoteDataSource.uploadAnswerSheet(
+          file, name, uid, examName);
 
       return Right(result);
     } catch (e) {

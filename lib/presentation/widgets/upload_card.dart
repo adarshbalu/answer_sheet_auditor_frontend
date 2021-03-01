@@ -18,7 +18,7 @@ class UploadCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
         title: Text(
-          answerSheet?.name ?? 'kgaksd',
+          answerSheet?.name,
           style: textTheme.headline4,
         ),
         trailing: InkWell(

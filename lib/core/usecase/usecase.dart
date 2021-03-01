@@ -24,6 +24,7 @@ class Params extends Equatable {
       this.password,
       this.name,
       this.file,
+      this.examName,
       this.visionImage,
       this.uid});
   final String name;
@@ -31,8 +32,9 @@ class Params extends Equatable {
   final String email;
   final String password;
   final File file;
+  final String examName;
   final FirebaseVisionImage visionImage;
   @override
   List<Object> get props =>
-      <Object>[name, email, password, file, visionImage, uid];
+      <Object>[name, email, password, file, visionImage, uid, examName];
 }

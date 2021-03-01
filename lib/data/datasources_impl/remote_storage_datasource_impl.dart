@@ -14,7 +14,7 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
 
   @override
   Future<AnswerSheet> uploadAnswerSheet(
-      File file, String name, String uid) async {
+      File file, String name, String uid, String examName) async {
     try {
       final File fileToUpload = File(file.path);
       final Uuid uuid = Uuid();
@@ -31,6 +31,7 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
           'id': id,
           'uid': uid,
           'fileName': fileName,
+          'examName': examName,
           'timeStamp': timeStamp
         },
       );
@@ -39,6 +40,7 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
       final Reference reference = firebaseStorage
           .ref('/answer_sheet_uploads')
           .child(folderName)
+          .child(examName)
           .child(name)
           .child('$id$extension');
       AnswerSheet answerSheet;

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:answer_sheet_auditor/core/usecase/usecase.dart';
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
@@ -10,7 +9,7 @@ import 'package:answer_sheet_auditor/domain/usecases/storage/upload_text.dart';
 import 'package:flutter/material.dart';
 
 enum UploadStatus { ERROR, NONE, UPLOADING, UPLOADED }
-enum Status { NONE, LOADED }
+enum SheetStatus { EMPTY, LOADED }
 enum FileStatus { ERROR, NONE, SUCCESS, LOADING }
 
 class StorageProvider extends ChangeNotifier {
@@ -28,8 +27,8 @@ class StorageProvider extends ChangeNotifier {
   FileStatus get textFileStatus => _textFileStatus;
 
   FileStatus get imageFileStatus => _imageFileStatus;
-  Status _status;
-  Status get status => _status;
+  SheetStatus _sheetStatus;
+  SheetStatus get sheetStatus => _sheetStatus;
   final List<AnswerSheet> _answerSheets = [];
   String _pickedFileName;
 
@@ -37,6 +36,9 @@ class StorageProvider extends ChangeNotifier {
 
   List<AnswerSheet> get answerSheets => _answerSheets;
   String _answerKeyURL;
+  String _examName;
+
+  String get examName => _examName;
 
   String get answerKeyURL => _answerKeyURL;
 
@@ -93,7 +95,7 @@ class StorageProvider extends ChangeNotifier {
     _uploadStatus = UploadStatus.UPLOADING;
     notifyListeners();
     final failureOrUpdate = await uploadImageFileToStorage(
-        Params(file: pickedFile, name: name, uid: uid));
+        Params(file: pickedFile, name: name, uid: uid, examName: _examName));
     failureOrUpdate.fold((failure) {
       _uploadStatus = UploadStatus.ERROR;
       notifyListeners();
@@ -102,10 +104,14 @@ class StorageProvider extends ChangeNotifier {
         notifyListeners();
       });
     }, (answerSheet) {
-      // _answerSheets.add(answerSheet);
+      _answerSheets.add(answerSheet);
       _uploadStatus = UploadStatus.UPLOADED;
-      _status = Status.LOADED;
+      _sheetStatus = SheetStatus.LOADED;
       notifyListeners();
+      Future.delayed(const Duration(seconds: 2), () {
+        _uploadStatus = UploadStatus.NONE;
+        notifyListeners();
+      });
     });
   }
 
@@ -122,31 +128,25 @@ class StorageProvider extends ChangeNotifier {
         notifyListeners();
       });
     }, (downloadURL) {
+      _examName = name;
       _answerKeyURL = downloadURL;
       _keyUploadStatus = UploadStatus.UPLOADED;
+      _sheetStatus = SheetStatus.LOADED;
       notifyListeners();
     });
   }
 
   void resetUploadStatus() {
     _uploadStatus = UploadStatus.NONE;
+    _imageFileStatus = FileStatus.NONE;
     notifyListeners();
   }
 
   void removeAnswerSheet(String id) {
     _answerSheets.removeWhere((element) => element.id == id);
     if (_answerSheets.isEmpty) {
-      _status = Status.NONE;
+      _sheetStatus = SheetStatus.EMPTY;
     }
-    notifyListeners();
-  }
-
-  void addNewSheet() {
-    _answerSheets.add(AnswerSheet(
-        url: 'asdasd',
-        name: 'asdasd',
-        id: 'asd+${Random().nextInt(100).toString()}'));
-    _status = Status.LOADED;
     notifyListeners();
   }
 }
