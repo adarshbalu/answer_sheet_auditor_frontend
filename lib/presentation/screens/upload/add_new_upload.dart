@@ -1,4 +1,4 @@
-import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/blue_button.dart';
+import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/green_button.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/buttons/yellow_button.dart';
 import 'package:answer_sheet_auditor/core/presentation/widgets/text_input.dart';
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
@@ -59,7 +59,7 @@ class _AddNewUploadState extends State<AddNewUpload> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: SvgPicture.asset(
-                        Assets.ADD_DOCUMENT,
+                        Assets.ADD_FILES,
                         height: 200,
                       ),
                     ),
@@ -110,7 +110,7 @@ This field can't be empty !''';
                 Consumer<StorageProvider>(
                   builder: (_, provider, child) {
                     if (provider.textFileStatus == FileStatus.SUCCESS) {
-                      return BlueButton(
+                      return GreenButton(
                           label: 'Upload key',
                           onPressed: () async {
                             final form = _formKey.currentState;

@@ -1,6 +1,8 @@
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
+import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class AddedTextFileCard extends StatelessWidget {
   const AddedTextFileCard({
@@ -12,7 +14,9 @@ class AddedTextFileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {},
+      onTap: () async {
+        context.read<StorageProvider>().pickText();
+      },
       child: Card(
         margin: const EdgeInsets.only(bottom: 24),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

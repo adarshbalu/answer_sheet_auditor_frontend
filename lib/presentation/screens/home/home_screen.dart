@@ -30,7 +30,11 @@ class HomeScreen extends StatelessWidget {
           child: Consumer<StorageProvider>(
             builder: (_, provider, child) {
               if (provider.keyUploadStatus == UploadStatus.UPLOADED) {
-                return const AnswerSheetsList();
+                if (provider.answerSheets.isNotEmpty) {
+                  return const AnswerSheetsList();
+                } else {
+                  return const NoSheetAdded();
+                }
               } else {
                 return child;
               }
@@ -85,23 +89,22 @@ class AnswerSheetsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<StorageProvider>();
-    if (provider.answerSheets.isNotEmpty) {
-      return SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 24,
-            ),
-            Text(
-              'Answer sheets added',
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Flexible(
-              child: ListView.builder(
+    return SafeArea(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 24,
+          ),
+          Text(
+            'Answer sheets added',
+            style: Theme.of(context).textTheme.headline1,
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Flexible(
+            child: Consumer<StorageProvider>(
+              builder: (_, provider, child) => ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (_, index) => UploadCard(
                   answerSheet: provider.answerSheets[index],
@@ -109,62 +112,59 @@ class AnswerSheetsList extends StatelessWidget {
                 itemCount: provider.answerSheets.length,
               ),
             ),
-            const SizedBox(
-              height: 32,
-            ),
-            const Spacer(),
-            if (context.read<StorageProvider>().answerSheets.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: BlueButton(
-                  label: 'Finish',
-                  onPressed: () async {
-                    context.read<StorageProvider>().answerKeyURL;
-                    List<AnswerSheetModel> answerSheets;
-                    answerSheets = <AnswerSheetModel>[];
-                    context
-                        .read<StorageProvider>()
-                        .answerSheets
-                        .forEach((element) {
-                      answerSheets.add(AnswerSheetModel(
-                          paperurl: element.url, studentid: element.name));
-                    });
-                    final ExamParamsModel exam = ExamParamsModel(
-                        answerkey: context.read<StorageProvider>().answerKeyURL,
-                        name: context.read<StorageProvider>().examName,
-                        sheets: answerSheets);
-                    await context.read<ExamProvider>().createNewExam(exam);
-                  },
-                ),
-              )
-            else
-              const SizedBox.shrink(),
-            const SizedBox(
-              height: 16,
-            ),
-            Consumer<ExamProvider>(builder: (_, provider, child) {
-              if (provider.createExamStatus == DataLoadStatus.LOADING) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (provider.createExamStatus == DataLoadStatus.ERROR) {
-                toast.Fluttertoast.showToast(
-                    msg: 'Error adding exam',
-                    toastLength: toast.Toast.LENGTH_SHORT);
-                return const SizedBox.shrink();
-              } else {
-                return const SizedBox.shrink();
-              }
-            }),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      );
-    } else {
-      return const NoSheetAdded();
-    }
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          if (context.read<StorageProvider>().answerSheets.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: BlueButton(
+                label: 'Finish',
+                onPressed: () async {
+                  context.read<StorageProvider>().answerKeyURL;
+                  List<AnswerSheetModel> answerSheets;
+                  answerSheets = <AnswerSheetModel>[];
+                  context
+                      .read<StorageProvider>()
+                      .answerSheets
+                      .forEach((element) {
+                    answerSheets.add(AnswerSheetModel(
+                        paperurl: element.url, studentid: element.name));
+                  });
+                  final ExamParamsModel exam = ExamParamsModel(
+                      answerkey: context.read<StorageProvider>().answerKeyURL,
+                      name: context.read<StorageProvider>().examName,
+                      sheets: answerSheets);
+                  await context.read<ExamProvider>().createNewExam(exam);
+                },
+              ),
+            )
+          else
+            const SizedBox.shrink(),
+          const SizedBox(
+            height: 16,
+          ),
+          Consumer<ExamProvider>(builder: (_, provider, child) {
+            if (provider.createExamStatus == DataLoadStatus.LOADING) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (provider.createExamStatus == DataLoadStatus.ERROR) {
+              toast.Fluttertoast.showToast(
+                  msg: 'Error adding exam',
+                  toastLength: toast.Toast.LENGTH_SHORT);
+              return const SizedBox.shrink();
+            } else {
+              return const SizedBox.shrink();
+            }
+          }),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -177,15 +177,25 @@ class NoSheetAdded extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Align(
-        alignment: Alignment.topCenter,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 24,
-            ),
             Text(
               'Answer sheets added',
               style: Theme.of(context).textTheme.headline1,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => AddNewSheet()));
+              },
+              child: SvgPicture.asset(
+                Assets.ADD_DOCUMENT,
+                height: 200,
+              ),
             ),
             const SizedBox(
               height: 24,

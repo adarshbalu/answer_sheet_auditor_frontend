@@ -109,6 +109,7 @@ class StorageProvider extends ChangeNotifier {
       _answerSheets.add(answerSheet);
       _uploadStatus = UploadStatus.UPLOADED;
       _sheetStatus = SheetStatus.LOADED;
+      _imageFileStatus = FileStatus.NONE;
       notifyListeners();
       Future.delayed(const Duration(seconds: 2), () {
         _uploadStatus = UploadStatus.NONE;
@@ -142,6 +143,10 @@ class StorageProvider extends ChangeNotifier {
     _uploadStatus = UploadStatus.NONE;
     _imageFileStatus = FileStatus.NONE;
     notifyListeners();
+  }
+
+  void resetSheetStatus() {
+    _imageFileStatus = FileStatus.NONE;
   }
 
   Future<void> removeAnswerSheet(String id, String uid) async {
