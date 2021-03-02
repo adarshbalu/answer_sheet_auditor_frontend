@@ -6,4 +6,10 @@ class URL {
 
   static const String SIGN_UP_PATH = 'api/auth/signup/';
   static const String SIGN_UP_URL = BASE_URL + SIGN_UP_PATH;
+
+  static const String LIST_ALL_EXAMS_PATH = 'api/auditor/exam/';
+  static const String LIST_ALL_EXAMS_URL = BASE_URL + LIST_ALL_EXAMS_PATH;
+
+  static const String CREATE_EXAM_PATH = 'api/auditor/exam/';
+  static const String CREATE_EXAM_URL = BASE_URL + CREATE_EXAM_PATH;
 }

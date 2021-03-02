@@ -1,28 +1,35 @@
 import 'package:answer_sheet_auditor/core/utils/input_converter.dart';
 import 'package:answer_sheet_auditor/core/utils/network_status.dart';
+import 'package:answer_sheet_auditor/data/datasources/exam_api_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/file_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/local_datasouce.dart';
 import 'package:answer_sheet_auditor/data/datasources/remote_storage_datasource.dart';
 import 'package:answer_sheet_auditor/data/datasources/user_auth_remote_datasource.dart';
+import 'package:answer_sheet_auditor/data/datasources_impl/exam_api_datasource_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/file_datasouce_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/local_datasource_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/remote_storage_datasource_impl.dart';
 import 'package:answer_sheet_auditor/data/datasources_impl/user_auth_remote_datasource_impl.dart';
+import 'package:answer_sheet_auditor/data/repositories_impl/exam_repository_impl.dart';
 import 'package:answer_sheet_auditor/data/repositories_impl/local_storage_repository_impl.dart';
 import 'package:answer_sheet_auditor/data/repositories_impl/remote_storage_repository_impl.dart';
 import 'package:answer_sheet_auditor/data/repositories_impl/user_auth_repository_impl.dart';
+import 'package:answer_sheet_auditor/domain/repositories/exam_repository.dart';
 import 'package:answer_sheet_auditor/domain/repositories/local_storage_repository.dart';
 import 'package:answer_sheet_auditor/domain/repositories/remote_storage_repository.dart';
 import 'package:answer_sheet_auditor/domain/repositories/user_auth_repository.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/login_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
+import 'package:answer_sheet_auditor/domain/usecases/exams/create_exam.dart';
+import 'package:answer_sheet_auditor/domain/usecases/exams/get_all_exams.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_text.dart';
 import 'package:answer_sheet_auditor/presentation/providers/auth_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/bottom_nav_provider.dart';
+import 'package:answer_sheet_auditor/presentation/providers/exam_provider.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
@@ -57,23 +64,37 @@ Future<void> init() async {
     () => BottomNavProvider(),
   );
 
+  locator.registerFactory(
+    () => ExamProvider(locator(), locator()),
+  );
+
   //usecases
 
   _initAuthUsecases();
   _initStorageUseCases();
+  _initExamUseCases();
 
   //repository
 
-  locator.registerLazySingleton<UserAuthRepository>(
-      () => UserAuthRepositoryImpl(locator(), locator()));
+  locator
+      .registerLazySingleton<UserAuthRepository>(() => UserAuthRepositoryImpl(
+            locator(),
+            locator(),
+          ));
 
   locator.registerLazySingleton<RemoteStorageRepository>(
-      () => RemoteStorageRepositoryImpl(locator(), locator()));
+      () => RemoteStorageRepositoryImpl(
+            locator(),
+            locator(),
+          ));
 
   locator.registerLazySingleton<LocalStorageRepository>(
       () => LocalStorageRepositoryImpl(
             locator(),
           ));
+
+  locator.registerLazySingleton<ExamRepository>(
+      () => ExamRepositoryImpl(locator(), locator()));
 
   //data sources
 
@@ -81,6 +102,9 @@ Future<void> init() async {
       () => UserAuthRemoteDataSourceImpl(locator(), locator()));
 
   locator.registerLazySingleton<FileDataSource>(() => FileDataSouceImpl());
+
+  locator.registerLazySingleton<ExamAPIRemoteDataSource>(
+      () => ExamAPIRemoteDataSourceImpl(locator()));
 
   locator.registerLazySingleton<RemoteStorageDataSource>(
       () => RemoteStorageDataSourceImpl(locator()));
@@ -116,4 +140,9 @@ void _initStorageUseCases() {
   locator.registerLazySingleton(() => PickImageFile(locator()));
   locator.registerLazySingleton(() => PickTextFile(locator()));
   locator.registerLazySingleton(() => UploadTextToStorage(locator()));
+}
+
+void _initExamUseCases() {
+  locator.registerLazySingleton(() => GetAllExams(locator()));
+  locator.registerLazySingleton(() => CreateExams(locator()));
 }
