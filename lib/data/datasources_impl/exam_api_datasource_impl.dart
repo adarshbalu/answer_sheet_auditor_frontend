@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:answer_sheet_auditor/core/error/exceptions.dart';
 import 'package:answer_sheet_auditor/core/utils/url.dart';
 import 'package:answer_sheet_auditor/data/datasources/exam_api_datasource.dart';
-import 'package:answer_sheet_auditor/domain/entities/exam.dart';
+import 'package:answer_sheet_auditor/data/models/exam_model.dart';
 import 'package:http/http.dart' as http;
 
 class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
@@ -17,9 +19,9 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
         'Authorization': 'Bearer $token'
       };
       final http.Response response =
-          await client.post(url, body: data, headers: headers);
+          await client.post(url, body: jsonEncode(data), headers: headers);
       final int statusCode = response.statusCode;
-      if (statusCode == 200) {
+      if (statusCode == 201) {
         return;
       } else {
         throw ServerException();
@@ -30,7 +32,7 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
   }
 
   @override
-  Future<List<Exams>> getAllExams(String token) async {
+  Future<List<ExamsModel>> getAllExams(String token) async {
     try {
       const String url = URL.LIST_ALL_EXAMS_URL;
       final Map<String, String> headers = {
@@ -40,9 +42,9 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
       final http.Response response = await client.get(url, headers: headers);
       final int statusCode = response.statusCode;
       if (statusCode == 200) {
-        print(response.body);
-        // List<ExamsModel>.from(json.decode(str).map((x) => ExamsModel.fromJson(x)));
-        return <Exams>[];
+        final List<ExamsModel> exams = examsModelFromJson(response.body);
+
+        return exams;
       } else {
         throw ServerException();
       }

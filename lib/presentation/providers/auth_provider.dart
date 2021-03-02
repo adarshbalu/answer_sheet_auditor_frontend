@@ -71,6 +71,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
           (failure) {
             _user = null;
             _status = AuthStatus.ERROR;
+            firebaseAuth.signOut();
             _errorMessage = _mapFailureToMessage(failure);
             notifyListeners();
             Future.delayed(const Duration(seconds: 2), () {
@@ -98,6 +99,7 @@ class AuthProvider extends ChangeNotifier with EquatableMixin {
       (failure) {
         _user = null;
         _status = AuthStatus.ERROR;
+        firebaseAuth.signOut();
         _errorMessage = _mapFailureToMessage(failure);
         notifyListeners();
         Future.delayed(const Duration(seconds: 2), () {

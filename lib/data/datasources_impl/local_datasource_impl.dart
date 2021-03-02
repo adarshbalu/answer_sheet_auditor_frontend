@@ -7,9 +7,9 @@ class LocalDataSourceImpl extends LocalDataSource {
   final SharedPreferences sharedPreferences;
 
   @override
-  String getString(String key) {
+  Future<String> getString(String key) async {
     try {
-      sharedPreferences.reload();
+      await sharedPreferences.reload();
       final result = sharedPreferences.getString(key);
       if (result != null) {
         return result;
@@ -23,11 +23,12 @@ class LocalDataSourceImpl extends LocalDataSource {
 
   @override
   Future<void> saveString(String key, String data) async {
-    return sharedPreferences.setString(key, data).catchError((e) {
+    try {
+      sharedPreferences.setString(key, data);
+      return await sharedPreferences.reload();
+    } catch (e) {
       throw CacheException();
-    }).then((_) async {
-      await sharedPreferences.reload();
-    });
+    }
   }
 
   @override

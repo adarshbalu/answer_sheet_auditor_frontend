@@ -9,9 +9,9 @@ class LocalStorageRepositoryImpl extends LocalStorageRepository {
 
   @override
   @override
-  Either<Failure, String> getStringFromStorage(String key) {
+  Future<Either<Failure, String>> getStringFromStorage(String key) async {
     try {
-      final String result = localDataSource.getString(key);
+      final String result = await localDataSource.getString(key);
       return Right(result);
     } catch (e) {
       return Left(CacheFailure());

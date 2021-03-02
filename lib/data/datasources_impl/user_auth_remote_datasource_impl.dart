@@ -100,9 +100,11 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
       };
       final http.Response response = await client.post(url, body: body);
       final int statusCode = response.statusCode;
+
       if (statusCode == 200) {
         final data = jsonDecode(response.body);
         final String jwt = data['token'].toString();
+
         return jwt;
       } else {
         throw exc.AuthException();
@@ -123,9 +125,11 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
       };
       final http.Response response = await client.post(url, body: body);
       final int statusCode = response.statusCode;
+
       if (statusCode == 200) {
         final data = jsonDecode(response.body);
         final String jwt = data['token'].toString();
+
         return jwt;
       } else {
         throw exc.AuthException();

@@ -1,6 +1,6 @@
 abstract class LocalDataSource {
   bool checkForData(String key);
-  String getString(String key);
+  Future<String> getString(String key);
   Future<dynamic> getData(String key);
   Future<int> getInt(String key);
   Future<bool> removeData(String key);

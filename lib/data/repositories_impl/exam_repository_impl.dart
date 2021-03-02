@@ -14,7 +14,8 @@ class ExamRepositoryImpl extends ExamRepository {
   @override
   Future<Either<Failure, void>> createExam(Map<String, dynamic> data) async {
     try {
-      final String token = localDataSource.getString(StringsManager.JWT_TOKEN);
+      final String token =
+          await localDataSource.getString(StringsManager.JWT_TOKEN);
       final result = await dataSource.createExam(data, token);
       return Right(result);
     } catch (e) {
@@ -25,7 +26,8 @@ class ExamRepositoryImpl extends ExamRepository {
   @override
   Future<Either<Failure, List<Exams>>> listAllExams() async {
     try {
-      final String token = localDataSource.getString(StringsManager.JWT_TOKEN);
+      final String token =
+          await localDataSource.getString(StringsManager.JWT_TOKEN);
       final result = await dataSource.getAllExams(token);
       return Right(result);
     } catch (e) {
