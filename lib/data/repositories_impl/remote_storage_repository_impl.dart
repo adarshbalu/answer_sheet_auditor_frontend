@@ -56,4 +56,15 @@ class RemoteStorageRepositoryImpl extends RemoteStorageRepository {
       return Left(UploadFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteAnswerSheetFromStorage(
+      String examName, String studentID, String uid) async {
+    try {
+      return Right(await storageRemoteDataSource.deleteAnswerSheet(
+          examName, studentID, uid));
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
 }

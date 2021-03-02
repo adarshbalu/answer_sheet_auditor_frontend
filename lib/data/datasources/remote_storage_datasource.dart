@@ -6,4 +6,9 @@ abstract class RemoteStorageDataSource {
   Future<AnswerSheet> uploadAnswerSheet(
       File file, String name, String uid, String examName);
   Future<String> uploadAnswerkey(File file, String name, String uid);
+  Future<void> deleteAnswerSheet(
+    String examName,
+    String studentID,
+    String uid,
+  );
 }

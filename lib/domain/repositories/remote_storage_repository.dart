@@ -11,4 +11,6 @@ abstract class RemoteStorageRepository {
       File file, String name, String uid);
   Future<Either<Failure, File>> pickImageFile();
   Future<Either<Failure, File>> pickTextFile();
+  Future<Either<Failure, void>> deleteAnswerSheetFromStorage(
+      String examName, String studentID, String uid);
 }

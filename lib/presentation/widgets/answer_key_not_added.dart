@@ -1,4 +1,5 @@
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
+import 'package:answer_sheet_auditor/presentation/screens/upload/add_new_upload.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,7 +16,10 @@ class AnswerKeyNotAdded extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AddNewUpload()));
+          },
           child: SvgPicture.asset(
             Assets.UPLOAD_FILES,
             height: 200,

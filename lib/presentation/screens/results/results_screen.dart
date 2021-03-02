@@ -1,8 +1,8 @@
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
-import 'package:answer_sheet_auditor/data/models/exam_params_model.dart';
 import 'package:answer_sheet_auditor/presentation/providers/exam_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class ResultsScreen extends StatefulWidget {
@@ -47,14 +47,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
             ),
             InkWell(
               onTap: () async {
-                const ExamParamsModel exam = ExamParamsModel(
-                    answerkey: 'http://answer1.com',
-                    name: 'ajsd',
-                    sheets: [
-                      AnswerSheetModel(
-                          studentid: 'asdghasd', paperurl: 'http://jhgsad.com')
-                    ]);
-                await context.read<ExamProvider>().createNewExam(exam);
+                context.read<ExamProvider>().getExamsList();
               },
               child: Center(
                 child: SvgPicture.asset(
@@ -69,16 +62,41 @@ class _ResultsScreenState extends State<ResultsScreen> {
             Consumer<ExamProvider>(
               builder: (_, provider, child) {
                 if (provider.getAllExamsStatus == DataLoadStatus.LOADED) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (_, index) => ListTile(
-                        title: Text(provider.exams[index].name),
+                  if (provider.exams.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (_, index) => Card(
+                          margin: const EdgeInsets.all(8),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: ListTile(
+                            title: Text(provider.exams[index].name),
+                          ),
+                        ),
+                        itemCount: provider.exams.length,
                       ),
-                      itemCount: provider.exams.length,
-                    ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        'No exams added',
+                        style: textTheme.headline4,
+                      ),
+                    );
+                  }
+                } else if (provider.getAllExamsStatus ==
+                    DataLoadStatus.LOADING) {
+                  return const CircularProgressIndicator();
+                } else if (provider.getAllExamsStatus == DataLoadStatus.ERROR) {
+                  Fluttertoast.showToast(
+                      msg: 'Error Fetching data',
+                      toastLength: Toast.LENGTH_SHORT);
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text('Error fetching data'),
                   );
                 } else {
-                  return const CircularProgressIndicator();
+                  return const SizedBox.shrink();
                 }
               },
             ),

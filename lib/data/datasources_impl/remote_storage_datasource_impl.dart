@@ -102,4 +102,19 @@ class RemoteStorageDataSourceImpl extends RemoteStorageDataSource {
       throw UploadException(message: e.toString());
     }
   }
+
+  @override
+  Future<void> deleteAnswerSheet(
+      String examName, String studentID, String uid) async {
+    try {
+      final Reference reference = firebaseStorage
+          .ref('/answer_sheet_uploads')
+          .child(uid)
+          .child(examName)
+          .child(studentID);
+      return await reference.delete();
+    } catch (e) {
+      throw ServerException();
+    }
+  }
 }

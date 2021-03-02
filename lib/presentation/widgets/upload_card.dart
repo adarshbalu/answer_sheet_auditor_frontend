@@ -1,5 +1,6 @@
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
 import 'package:answer_sheet_auditor/presentation/providers/storage_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,9 @@ class UploadCard extends StatelessWidget {
           style: textTheme.headline4,
         ),
         trailing: InkWell(
-          onTap: () =>
-              context.read<StorageProvider>().removeAnswerSheet(answerSheet.id),
+          onTap: () => context
+              .read<StorageProvider>()
+              .removeAnswerSheet(answerSheet.id, context.read<User>().uid),
           child: const Icon(
             Icons.delete_outline,
             color: Colors.red,

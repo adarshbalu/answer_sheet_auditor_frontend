@@ -23,6 +23,7 @@ import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/exams/create_exam.dart';
 import 'package:answer_sheet_auditor/domain/usecases/exams/get_all_exams.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/delete_sheet.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_image.dart';
@@ -57,7 +58,8 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => StorageProvider(locator(), locator(), locator(), locator()),
+    () =>
+        StorageProvider(locator(), locator(), locator(), locator(), locator()),
   );
 
   locator.registerFactory(
@@ -140,6 +142,7 @@ void _initStorageUseCases() {
   locator.registerLazySingleton(() => PickImageFile(locator()));
   locator.registerLazySingleton(() => PickTextFile(locator()));
   locator.registerLazySingleton(() => UploadTextToStorage(locator()));
+  locator.registerLazySingleton(() => DeleteAnswerSheet(locator()));
 }
 
 void _initExamUseCases() {

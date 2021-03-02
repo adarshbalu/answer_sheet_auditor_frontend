@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:answer_sheet_auditor/core/usecase/usecase.dart';
 import 'package:answer_sheet_auditor/domain/entities/answer_sheets.dart';
+import 'package:answer_sheet_auditor/domain/usecases/storage/delete_sheet.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/upload_image.dart';
@@ -14,11 +15,12 @@ enum FileStatus { ERROR, NONE, SUCCESS, LOADING }
 
 class StorageProvider extends ChangeNotifier {
   StorageProvider(this.uploadImageFileToStorage, this.pickTextFile,
-      this.pickImageFile, this.uploadTextToStorage);
+      this.pickImageFile, this.uploadTextToStorage, this.deleteAnswerSheet);
   final PickTextFile pickTextFile;
   final PickImageFile pickImageFile;
   final UploadImageToStorage uploadImageFileToStorage;
   final UploadTextToStorage uploadTextToStorage;
+  final DeleteAnswerSheet deleteAnswerSheet;
   UploadStatus _uploadStatus, _keyUploadStatus;
 
   UploadStatus get keyUploadStatus => _keyUploadStatus;
@@ -142,7 +144,17 @@ class StorageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeAnswerSheet(String id) {
+  Future<void> removeAnswerSheet(String id, String uid) async {
+    AnswerSheet answerSheet;
+    // ignore: avoid_function_literals_in_foreach_calls
+    _answerSheets.forEach((element) {
+      if (element.id == id) {
+        answerSheet = element;
+      }
+    });
+
+    await deleteAnswerSheet(
+        Params(name: answerSheet.name, examName: examName, uid: uid));
     _answerSheets.removeWhere((element) => element.id == id);
     if (_answerSheets.isEmpty) {
       _sheetStatus = SheetStatus.EMPTY;

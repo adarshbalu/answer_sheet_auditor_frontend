@@ -18,34 +18,42 @@ List<ExamsModel> examsModelFromJson(String str) {
 class ExamsModel extends Exams {
   const ExamsModel({
     @required this.id,
-    @required this.name,
     @required this.evaluationStatus,
-  }) : super(id: id, name: name, evaluationStatus: evaluationStatus);
+    @required this.name,
+    @required this.evaluationDetailsModel,
+  }) : super(
+            id: id,
+            name: name,
+            evaluationStatus: evaluationStatus,
+            evaluationDetails: evaluationDetailsModel);
   factory ExamsModel.fromJson(Map<String, dynamic> json) => ExamsModel(
         id: json['id'] as int,
         name: json['name'] as String,
-        evaluationStatus: EvaluationStatusModel.fromJson(
-            json['evaluation_status'] as Map<String, dynamic>),
+        evaluationStatus: json['evaluation_status'] as bool,
+        evaluationDetailsModel: EvaluationDetailsModel.fromJson(
+            json['evaluation_details'] as Map<String, dynamic>),
       );
   final int id;
   final String name;
-  final EvaluationStatusModel evaluationStatus;
+  final bool evaluationStatus;
+  final EvaluationDetailsModel evaluationDetailsModel;
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'evaluation_status': evaluationStatus.toJson(),
+        'evaluation_status': evaluationStatus,
+        'evaluation_details': evaluationDetailsModel.toJson(),
       };
 }
 
-class EvaluationStatusModel extends EvaluationStatus {
-  const EvaluationStatusModel({
+class EvaluationDetailsModel extends EvaluationDetails {
+  const EvaluationDetailsModel({
     @required this.submitted,
     @required this.processed,
     @required this.remaining,
   }) : super(submitted: submitted, processed: processed, remaining: remaining);
-  factory EvaluationStatusModel.fromJson(Map<String, dynamic> json) =>
-      EvaluationStatusModel(
+  factory EvaluationDetailsModel.fromJson(Map<String, dynamic> json) =>
+      EvaluationDetailsModel(
         submitted: json['submitted'] as int,
         processed: json['processed'] as int,
         remaining: json['remaining'] as int,

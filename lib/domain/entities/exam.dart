@@ -5,19 +5,20 @@ class Exams extends Equatable {
   const Exams({
     @required this.id,
     @required this.name,
+    @required this.evaluationDetails,
     @required this.evaluationStatus,
   });
-
+  final bool evaluationStatus;
   final int id;
   final String name;
-  final EvaluationStatus evaluationStatus;
+  final EvaluationDetails evaluationDetails;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [evaluationDetails, evaluationStatus, id, name];
 }
 
-class EvaluationStatus extends Equatable {
-  const EvaluationStatus({
+class EvaluationDetails extends Equatable {
+  const EvaluationDetails({
     @required this.submitted,
     @required this.processed,
     @required this.remaining,
@@ -28,5 +29,5 @@ class EvaluationStatus extends Equatable {
   final int remaining;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [submitted, processed, remaining];
 }

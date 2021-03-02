@@ -7,6 +7,7 @@ class Assets {
   static const String USER = 'assets/illustrations/user.svg';
   static const String DASHBOARD = 'assets/illustrations/dashboard.svg';
   static const String ADD_USER = 'assets/illustrations/add_user.svg';
+  static const String CONFIRMED = 'assets/illustrations/confirmed.svg';
   static const String DOCUMENT_ADDED =
       'assets/illustrations/document_added.svg';
 }

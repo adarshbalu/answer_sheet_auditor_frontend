@@ -15,7 +15,7 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
     try {
       const String url = URL.CREATE_EXAM_URL;
       final Map<String, String> headers = {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
       final http.Response response =
@@ -36,7 +36,7 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
     try {
       const String url = URL.LIST_ALL_EXAMS_URL;
       final Map<String, String> headers = {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       };
       final http.Response response = await client.get(url, headers: headers);

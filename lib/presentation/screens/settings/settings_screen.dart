@@ -79,15 +79,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     .format(context.read<User>().metadata.lastSignInTime)),
               ),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: ListTile(
-                subtitle: const Text('User ID'),
-                title: Text(context.read<User>().uid),
-              ),
-            ),
             const SizedBox(
               height: 24,
             ),

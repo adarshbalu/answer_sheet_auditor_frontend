@@ -44,4 +44,11 @@ class ExamProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  void resetExam() {
+    _exams = [];
+    _getAllExamsStatus = DataLoadStatus.NONE;
+    _createExamStatus = DataLoadStatus.NONE;
+    notifyListeners();
+  }
 }
