@@ -3,19 +3,16 @@ import 'package:meta/meta.dart';
 
 class ExamParamsModel extends ExamParams {
   const ExamParamsModel({
-    @required this.fbid,
     @required this.name,
     @required this.answerkey,
     @required this.sheets,
-  }) : super(fbid: fbid, name: name, answerkey: answerkey, sheets: sheets);
+  }) : super(name: name, answerkey: answerkey, sheets: sheets);
 
-  final String fbid;
   final String name;
   final String answerkey;
   final List<AnswerSheetModel> sheets;
 
   Map<String, dynamic> toJson() => {
-        'fbid': fbid,
         'name': name,
         'answerkey': answerkey,
         'sheets': List<dynamic>.from(sheets.map((x) => x.toJson())),
@@ -28,7 +25,7 @@ class AnswerSheetModel extends AnswerSheets {
     @required this.paperurl,
   }) : super(studentid: studentid, paperurl: paperurl);
 
-  final int studentid;
+  final String studentid;
   final String paperurl;
 
   Map<String, dynamic> toJson() => {
