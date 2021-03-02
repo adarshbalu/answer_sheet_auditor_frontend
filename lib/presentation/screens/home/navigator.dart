@@ -57,7 +57,7 @@ class _LoggedUserBuilderState extends State<LoggedUserBuilder> {
         ),
       ),
       body: PageView(
-        physics: const BouncingScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           context.read<BottomNavProvider>().movePage(index);
           _controller.jumpToPage(
