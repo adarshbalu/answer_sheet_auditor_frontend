@@ -41,6 +41,7 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
       final int statusCode = response.statusCode;
       if (statusCode == 200) {
         print(response.body);
+        // List<ExamsModel>.from(json.decode(str).map((x) => ExamsModel.fromJson(x)));
         return <Exams>[];
       } else {
         throw ServerException();
