@@ -12,9 +12,20 @@ class AnswerKeyNotAdded extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 7,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Welcome to Answer Sheet Auditor',
+            style: textTheme.headline1,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const Spacer(),
         InkWell(
           onTap: () {
             Navigator.push(
@@ -22,7 +33,7 @@ class AnswerKeyNotAdded extends StatelessWidget {
           },
           child: SvgPicture.asset(
             Assets.UPLOAD_FILES,
-            height: 200,
+            height: 220,
           ),
         ),
         const SizedBox(
@@ -33,6 +44,7 @@ class AnswerKeyNotAdded extends StatelessWidget {
           textAlign: TextAlign.center,
           style: textTheme.subtitle1,
         ),
+        const Spacer(),
       ],
     );
   }
