@@ -10,7 +10,9 @@ class FileDataSouceImpl extends FileDataSource {
     try {
       final FilePickerResult result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['jpg', 'png', 'jpeg'],
+        allowedExtensions: [
+          'pdf',
+        ],
       );
       if (result != null) {
         final File file = File(result.files.single.path);
