@@ -31,7 +31,7 @@ class FileDataSouceImpl extends FileDataSource {
       final FilePickerResult result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: [
-          'txt',
+          'json',
         ],
       );
       if (result != null) {
