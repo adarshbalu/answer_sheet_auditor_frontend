@@ -29,9 +29,9 @@ class ExamsModel extends Exams {
   factory ExamsModel.fromJson(Map<String, dynamic> json) => ExamsModel(
         id: json['id'] as int,
         name: json['name'] as String,
-        evaluationStatus: json['evaluation_status'] as bool,
+        evaluationStatus: json['status'] as bool,
         evaluationDetailsModel: EvaluationDetailsModel.fromJson(
-            json['evaluation_details'] as Map<String, dynamic>),
+            json['details'] as Map<String, dynamic>),
       );
   final int id;
   final String name;
@@ -48,23 +48,31 @@ class ExamsModel extends Exams {
 
 class EvaluationDetailsModel extends EvaluationDetails {
   const EvaluationDetailsModel({
-    @required this.submitted,
-    @required this.processed,
-    @required this.remaining,
-  }) : super(submitted: submitted, processed: processed, remaining: remaining);
+    @required this.queued,
+    @required this.processing,
+    @required this.success,
+    @required this.failure,
+  }) : super(
+            queued: queued,
+            processing: processing,
+            success: success,
+            failure: failure);
   factory EvaluationDetailsModel.fromJson(Map<String, dynamic> json) =>
       EvaluationDetailsModel(
-        submitted: json['submitted'] as int,
-        processed: json['processed'] as int,
-        remaining: json['remaining'] as int,
+        queued: json['queued'] as int,
+        processing: json['processing'] as int,
+        success: json['success'] as int,
+        failure: json['failure'] as int,
       );
-  final int submitted;
-  final int processed;
-  final int remaining;
+  final int queued;
+  final int processing;
+  final int success;
+  final int failure;
 
   Map<String, dynamic> toJson() => {
-        'submitted': submitted,
-        'processed': processed,
-        'remaining': remaining,
+        'queued': queued,
+        'processing': processing,
+        'success': success,
+        'failure': failure,
       };
 }

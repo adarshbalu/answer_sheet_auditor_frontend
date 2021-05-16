@@ -19,15 +19,17 @@ class Exams extends Equatable {
 
 class EvaluationDetails extends Equatable {
   const EvaluationDetails({
-    @required this.submitted,
-    @required this.processed,
-    @required this.remaining,
+    @required this.queued,
+    @required this.failure,
+    @required this.processing,
+    @required this.success,
   });
 
-  final int submitted;
-  final int processed;
-  final int remaining;
+  final int queued;
+  final int processing;
+  final int success;
+  final int failure;
 
   @override
-  List<Object> get props => [submitted, processed, remaining];
+  List<Object> get props => [queued, processing, success, failure];
 }

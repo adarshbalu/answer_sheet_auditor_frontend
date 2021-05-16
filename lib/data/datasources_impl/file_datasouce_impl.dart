@@ -4,7 +4,7 @@ import 'package:answer_sheet_auditor/core/error/exceptions.dart';
 import 'package:answer_sheet_auditor/data/datasources/file_datasource.dart';
 import 'package:file_picker/file_picker.dart';
 
-class FileDataSouceImpl extends FileDataSource {
+class FileDataSourceImpl extends FileDataSource {
   @override
   Future<File> getImageFromStorage() async {
     try {

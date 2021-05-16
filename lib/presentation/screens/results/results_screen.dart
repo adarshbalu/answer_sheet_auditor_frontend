@@ -1,5 +1,7 @@
 import 'package:answer_sheet_auditor/core/utils/assets.dart';
+import 'package:answer_sheet_auditor/domain/entities/exam.dart';
 import 'package:answer_sheet_auditor/presentation/providers/exam_provider.dart';
+import 'package:answer_sheet_auditor/presentation/screens/results/exam_all_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,13 +67,8 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   if (provider.exams.isNotEmpty) {
                     return Expanded(
                       child: ListView.builder(
-                        itemBuilder: (_, index) => Card(
-                          margin: const EdgeInsets.all(8),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: ListTile(
-                            title: Text(provider.exams[index].name),
-                          ),
+                        itemBuilder: (_, index) => ExamCard(
+                          exam: provider.exams[index],
                         ),
                         itemCount: provider.exams.length,
                       ),
@@ -102,6 +99,50 @@ class _ResultsScreenState extends State<ResultsScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ExamCard extends StatelessWidget {
+  const ExamCard({
+    Key key,
+    this.exam,
+  }) : super(key: key);
+  final Exams exam;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        leading: exam.evaluationStatus
+            ? const CircleAvatar(
+                backgroundColor: Colors.green,
+                child: Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+              )
+            : const CircleAvatar(
+                backgroundColor: Colors.grey,
+                child: Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+              ),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ExamAllInfoScreen(
+                        exam: exam,
+                      )));
+        },
+        title: Text(exam.name),
+        subtitle: !exam.evaluationStatus
+            ? const Text('Processing')
+            : const Text('Completed'),
       ),
     );
   }

@@ -103,7 +103,7 @@ Future<void> init() async {
   locator.registerLazySingleton<UserAuthRemoteDataSource>(
       () => UserAuthRemoteDataSourceImpl(locator(), locator()));
 
-  locator.registerLazySingleton<FileDataSource>(() => FileDataSouceImpl());
+  locator.registerLazySingleton<FileDataSource>(() => FileDataSourceImpl());
 
   locator.registerLazySingleton<ExamAPIRemoteDataSource>(
       () => ExamAPIRemoteDataSourceImpl(locator()));
