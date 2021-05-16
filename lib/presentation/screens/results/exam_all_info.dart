@@ -71,3 +71,20 @@ class ExamEvaluationIncomplete extends StatelessWidget {
     );
   }
 }
+
+class ExamResultDetails extends StatelessWidget {
+  const ExamResultDetails({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Card(
+      child: ListTile(
+        title: Text('10/10'),
+        subtitle: Text('Marks'),
+        leading: CircleAvatar(
+          child: Text('20'),
+        ),
+      ),
+    );
+  }
+}

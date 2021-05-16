@@ -51,6 +51,7 @@ class MateApp extends StatelessWidget {
     return AuthWidgetBuilder(
       builder: (context, userSnapshot) => OverlaySupport(
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             visualDensity: VisualDensity.adaptivePlatformDensity,
             primaryColor: AppTheme.PRIMARY_COLOR,
