@@ -36,6 +36,7 @@ dependencies:
   uuid: 2.2.2
   file_picker: ^2.1.6
   path: ^1.7.0
+  firebase_messaging: ^8.0.0-dev.15
 
 
 dev_dependencies:

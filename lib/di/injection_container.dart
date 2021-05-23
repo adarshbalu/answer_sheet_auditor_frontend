@@ -37,6 +37,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -46,7 +47,14 @@ final GetIt locator = GetIt.instance;
 
 Future<void> init() async {
   await Firebase.initializeApp();
-
+  final firebaseMessaging = FirebaseMessaging.instance;
+  final key = await firebaseMessaging.getToken();
+  firebaseMessaging.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  print(key);
   //provider
   locator.registerFactory(
     () => AuthProvider(
@@ -127,6 +135,7 @@ Future<void> init() async {
   locator.registerLazySingleton(() => sharedPreferences);
   locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(() => FirebaseAuth.instance);
+  locator.registerLazySingleton(() => firebaseMessaging);
   locator.registerLazySingleton(() => Connectivity());
   locator.registerLazySingleton(() => FirebaseStorage.instance);
   locator.registerLazySingleton(() => DataConnectionChecker());
