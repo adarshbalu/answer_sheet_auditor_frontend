@@ -30,7 +30,7 @@ class _ExamAllInfoScreenState extends State<ExamAllInfoScreen> {
                     height: 32,
                   ),
                   Text(
-                    '${widget.exam.name} Details',
+                    '${widget.exam.name} (${widget.exam.maxScore})',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -41,9 +41,12 @@ class _ExamAllInfoScreenState extends State<ExamAllInfoScreen> {
                     exams: widget.exam,
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   const Divider(),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Text(
                     'All marks info',
                     textAlign: TextAlign.center,

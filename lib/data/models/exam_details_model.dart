@@ -12,6 +12,7 @@ ExamDetails examDetailsFromJson(String str) =>
 class ExamDetails {
   ExamDetails({
     @required this.id,
+    // @required this.maxScore,
     @required this.name,
     @required this.answerKey,
     @required this.sheets,
@@ -25,6 +26,7 @@ class ExamDetails {
       });
     }
     return ExamDetails(
+        //   maxScore: json['maxscore'] as double,
         id: json['id'] as int,
         name: json['name'] as String,
         answerKey: json['answerkey'] as String,
@@ -32,6 +34,7 @@ class ExamDetails {
   }
 
   final int id;
+  // final double maxScore;
   final String name;
   final String answerKey;
   final List<Sheet> sheets;

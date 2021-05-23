@@ -19,15 +19,18 @@ class ExamsModel extends Exams {
   const ExamsModel({
     @required this.id,
     @required this.evaluationStatus,
+    @required this.maxScore,
     @required this.name,
     @required this.evaluationDetailsModel,
   }) : super(
             id: id,
             name: name,
             evaluationStatus: evaluationStatus,
+            maxScore: maxScore,
             evaluationDetails: evaluationDetailsModel);
   factory ExamsModel.fromJson(Map<String, dynamic> json) => ExamsModel(
         id: json['id'] as int,
+        maxScore: json['maxscore'] as double,
         name: json['name'] as String,
         evaluationStatus: json['status'] as bool,
         evaluationDetailsModel: EvaluationDetailsModel.fromJson(
@@ -37,7 +40,7 @@ class ExamsModel extends Exams {
   final String name;
   final bool evaluationStatus;
   final EvaluationDetailsModel evaluationDetailsModel;
-
+  final double maxScore;
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,

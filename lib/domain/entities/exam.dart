@@ -5,12 +5,14 @@ class Exams extends Equatable {
   const Exams({
     @required this.id,
     @required this.name,
+    @required this.maxScore,
     @required this.evaluationDetails,
     @required this.evaluationStatus,
   });
   final bool evaluationStatus;
   final int id;
   final String name;
+  final double maxScore;
   final EvaluationDetails evaluationDetails;
 
   @override
