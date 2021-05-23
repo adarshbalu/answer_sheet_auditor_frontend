@@ -12,4 +12,7 @@ class URL {
 
   static const String CREATE_EXAM_PATH = 'api/auditor/exam/';
   static const String CREATE_EXAM_URL = BASE_URL + CREATE_EXAM_PATH;
+
+  static const String VIEW_EXAM_PATH = 'api/auditor/exam/';
+  static const String VIEW_EXAM_URL = BASE_URL + CREATE_EXAM_PATH;
 }

@@ -23,6 +23,7 @@ import 'package:answer_sheet_auditor/domain/usecases/auth/sign_out.dart';
 import 'package:answer_sheet_auditor/domain/usecases/auth/sign_up_with_email.dart';
 import 'package:answer_sheet_auditor/domain/usecases/exams/create_exam.dart';
 import 'package:answer_sheet_auditor/domain/usecases/exams/get_all_exams.dart';
+import 'package:answer_sheet_auditor/domain/usecases/exams/view_exam_details.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/delete_sheet.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_image.dart';
 import 'package:answer_sheet_auditor/domain/usecases/storage/pick_text.dart';
@@ -67,7 +68,7 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => ExamProvider(locator(), locator()),
+    () => ExamProvider(locator(), locator(), locator()),
   );
 
   //usecases
@@ -147,5 +148,6 @@ void _initStorageUseCases() {
 
 void _initExamUseCases() {
   locator.registerLazySingleton(() => GetAllExams(locator()));
+  locator.registerLazySingleton(() => ViewExamDetails(locator()));
   locator.registerLazySingleton(() => CreateExams(locator()));
 }

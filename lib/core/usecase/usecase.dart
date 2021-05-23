@@ -23,15 +23,17 @@ class Params extends Equatable {
       this.password,
       this.name,
       this.file,
+      this.id,
       this.examName,
       this.uid});
   final String name;
   final String uid;
   final String email;
   final String password;
+  final int id;
   final File file;
   final String examName;
   @override
   List<Object> get props =>
-      <Object>[name, email, password, file, uid, examName];
+      <Object>[name, email, password, file, uid, examName, id];
 }
