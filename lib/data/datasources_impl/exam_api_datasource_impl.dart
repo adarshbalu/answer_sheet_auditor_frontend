@@ -66,7 +66,6 @@ class ExamAPIRemoteDataSourceImpl extends ExamAPIRemoteDataSource {
       final int statusCode = response.statusCode;
       if (statusCode == 200) {
         final ExamDetails exams = examDetailsFromJson(response.body);
-
         return exams;
       } else {
         throw ServerException();

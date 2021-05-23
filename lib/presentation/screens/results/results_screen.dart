@@ -132,6 +132,7 @@ class ExamCard extends StatelessWidget {
                 ),
               ),
         onTap: () {
+          context.read<ExamProvider>().getExamDetails(exam.id);
           Navigator.push(
               context,
               MaterialPageRoute(

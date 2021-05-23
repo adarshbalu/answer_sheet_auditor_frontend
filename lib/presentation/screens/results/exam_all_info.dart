@@ -1,5 +1,8 @@
+import 'package:answer_sheet_auditor/data/models/exam_details_model.dart';
 import 'package:answer_sheet_auditor/domain/entities/exam.dart';
+import 'package:answer_sheet_auditor/presentation/providers/exam_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExamAllInfoScreen extends StatefulWidget {
   const ExamAllInfoScreen({Key key, this.exam}) : super(key: key);
@@ -15,20 +18,67 @@ class _ExamAllInfoScreenState extends State<ExamAllInfoScreen> {
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(16),
-        child: ListView(
-          children: [
-            Text(
-              '${widget.exam.name} Details',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline2,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ExamEvaluationIncomplete(
-              exams: widget.exam,
-            ),
-          ],
+        child: Consumer<ExamProvider>(
+          builder: (_, provider, child) {
+            if (provider.viewExamDetailsStatus == DataLoadStatus.LOADING) {
+              return const CircularProgressIndicator();
+            } else if (provider.viewExamDetailsStatus ==
+                DataLoadStatus.LOADED) {
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    '${widget.exam.name} Details',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ExamEvaluationIncomplete(
+                    exams: widget.exam,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  const Divider(),
+                  Text(
+                    'All marks info',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Flexible(
+                    child: ListView.builder(
+                        itemCount: provider.examDetails.sheets.length,
+                        itemBuilder: (_, index) => ExamResultDetails(
+                              sheet: provider.examDetails.sheets[index],
+                            )),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(
+                child: Text('Error occurred'),
+              );
+            }
+          },
+          child: ListView(
+            children: [
+              Text(
+                '${widget.exam.name} Details',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              ExamEvaluationIncomplete(
+                exams: widget.exam,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -73,16 +123,16 @@ class ExamEvaluationIncomplete extends StatelessWidget {
 }
 
 class ExamResultDetails extends StatelessWidget {
-  const ExamResultDetails({Key key}) : super(key: key);
-
+  const ExamResultDetails({Key key, this.sheet}) : super(key: key);
+  final Sheet sheet;
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card(
       child: ListTile(
-        title: Text('10/10'),
-        subtitle: Text('Marks'),
+        title: Text(sheet.score.toString()),
+        subtitle: const Text('Marks'),
         leading: CircleAvatar(
-          child: Text('20'),
+          child: Text(sheet.studentid.toString()),
         ),
       ),
     );
