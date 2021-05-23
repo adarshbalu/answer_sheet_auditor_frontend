@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.push(
                   context, MaterialPageRoute(builder: (_) => AddNewUpload()));
             } else {
-              context.read<ExamProvider>().resetExam();
+              //context.read<ExamProvider>().resetExam();
             }
           },
           child: const Icon(
@@ -237,7 +237,14 @@ class ExamAddedSuccess extends StatelessWidget {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 48),
-            child: BlueButton(label: 'Add new', onPressed: () {}),
+            child: BlueButton(
+                label: 'Add new',
+                onPressed: () {
+                  context.read<ExamProvider>().resetExam();
+                  context.read<StorageProvider>().resetAll();
+                  context.read<StorageProvider>().resetSheetStatus();
+                  context.read<StorageProvider>().resetUploadStatus();
+                }),
           ),
           const SizedBox(
             height: 100,

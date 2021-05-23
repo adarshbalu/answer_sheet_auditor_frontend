@@ -70,6 +70,8 @@ class ExamProvider extends ChangeNotifier {
 
   void resetExam() {
     _exams = [];
+    _viewExamDetailsStatus = DataLoadStatus.NONE;
+    _createExamStatus = DataLoadStatus.NONE;
     _getAllExamsStatus = DataLoadStatus.NONE;
     _createExamStatus = DataLoadStatus.NONE;
     notifyListeners();

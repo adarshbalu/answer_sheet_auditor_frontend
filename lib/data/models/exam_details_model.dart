@@ -50,11 +50,11 @@ class Sheet {
         studentid: json['studentid'] as String,
         paperurl: json['paperurl'] as String,
         score: json['score'].toDouble() as double,
-        status: json['status'] as bool,
+        status: json['status'] as int,
       );
   final int id;
   final String studentid;
   final String paperurl;
   final double score;
-  final bool status;
+  final int status;
 }

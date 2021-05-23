@@ -1,5 +1,7 @@
 class URL {
-  static const String BASE_URL = 'https://answer-sheet-app.herokuapp.com/';
+  // static const String BASE_URL = 'https://answer-sheet-app.herokuapp.com/';
+  static const String BASE_URL = 'http://192.168.1.7:8000/';
+  // static const String BASE_URL = 'http://192.168.43.104:8000/';
 
   static const String LOG_IN_PATH = 'api/auth/signin/';
   static const String LOG_IN_URL = BASE_URL + LOG_IN_PATH;

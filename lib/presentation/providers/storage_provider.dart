@@ -166,4 +166,14 @@ class StorageProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void resetAll() {
+    _sheetStatus = SheetStatus.EMPTY;
+    _imageFileStatus = FileStatus.NONE;
+    _textFileStatus = FileStatus.NONE;
+    _keyUploadStatus = UploadStatus.NONE;
+    _uploadStatus = UploadStatus.NONE;
+    _answerSheets.clear();
+    notifyListeners();
+  }
 }

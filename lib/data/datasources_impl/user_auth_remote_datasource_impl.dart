@@ -22,6 +22,7 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
       );
       return signedUpUser?.user;
     } catch (error) {
+      print(error);
       switch (error.code.toString()) {
         case 'ERROR_WEAK_PASSWORD':
           throw exc.AuthException(message: ErrorMessages.WEAK_PASSWORD);
@@ -49,6 +50,7 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
 
       return user.user;
     } catch (error) {
+      print(error);
       switch (error.code.toString()) {
         case 'ERROR_INVALID_EMAIL':
           throw exc.AuthException(message: ErrorMessages.INVALID_EMAIL);
@@ -124,7 +126,8 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
       };
       final http.Response response = await client.post(url, body: body);
       final int statusCode = response.statusCode;
-
+      print(response.body);
+      print(response.statusCode);
       if (statusCode == 200) {
         final data = jsonDecode(response.body);
         final String jwt = data['token'].toString();
@@ -134,6 +137,7 @@ class UserAuthRemoteDataSourceImpl implements UserAuthRemoteDataSource {
         throw exc.AuthException();
       }
     } catch (e) {
+      print(e);
       throw exc.AuthException();
     }
   }
