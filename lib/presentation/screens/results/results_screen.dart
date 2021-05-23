@@ -147,6 +147,13 @@ class ExamCard extends StatelessWidget {
                           exam: exam,
                         )));
           } else {
+            showModalBottomSheet(
+                context: context,
+                builder: (_) => Container(
+                      child: ExamEvaluationIncomplete(
+                        exams: exam,
+                      ),
+                    ));
             Fluttertoast.showToast(msg: 'Evaluation not complete');
           }
         },
